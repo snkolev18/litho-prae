@@ -1,0 +1,22 @@
+{
+  "name": "litho-prae",
+  "version": "0.0.1",
+  "description": "The Litho-prae project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snkolev18/litho-prae.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/snkolev18/litho-prae/issues"
+  },
+  "homepage": "https://github.com/snkolev18/litho-prae#readme",
+  "devDependencies": {
+    "eslint": "^7.28.0"
+  }
+}
