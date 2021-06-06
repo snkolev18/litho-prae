@@ -18,5 +18,8 @@
   "homepage": "https://github.com/snkolev18/litho-prae#readme",
   "devDependencies": {
     "eslint": "^7.28.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
