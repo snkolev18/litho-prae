@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-mixed-spaces-and-tabs */
+const { NVarChar } = require("mssql/msnodesqlv8");
 const sql = require("mssql/msnodesqlv8");
 
 class Database {
@@ -38,6 +41,19 @@ class Database {
 		// resSet.recordset.map((record) => {
 		// 	console.log(record);
 		// });
+	}
+
+	async registerUserSP(firstName, lastName, username, email, password, status) {
+		const request = this.db.request().input("First_name", NVarChar, firstName)
+										 .input("Last_name", NVarChar, lastName)
+										 .input("Username", NVarChar, username)
+										 .input("Email", NVarChar, email)
+										 .input("Passwd_hash", NVarChar, password)
+										 .input("Status", NVarChar, status)
+										 .execute("RegisterAUser", function(err, result) {
+				console.log(result);
+			});
+		console.log(request);
 	}
 }
 
