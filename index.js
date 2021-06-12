@@ -2,6 +2,8 @@ const express 		= require("express");
 const bodyParser 	= require("body-parser");
 const app 			= express();
 const { Database } 	= require("./database");
+const { Logger }	= require("./log/logger");
+const logger 		= new Logger();
 const db 			= new Database("litho-prae-db", "DESKTOP-M33791J\\SQLExpress", true, false);
 const PORT 			= process.env.PORT || 1337;
 
@@ -22,6 +24,7 @@ app.post("/registerUser", async function(req, res) {
 	const usrData = req.body;
 	console.log(usrData);
 	await db.registerUserSP(usrData.fname, usrData.lname, usrData.usr, usrData.email, usrData.psw, 0);
+	logger.logRegisteredUser(usrData.usr, usrData);
 });
 
 app.listen(PORT, async () => {

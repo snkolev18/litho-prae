@@ -24,6 +24,7 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "msnodesqlv8": "^2.2.0",
-    "mssql": "^7.1.1"
+    "mssql": "^7.1.1",
+    "seq-logging": "^1.0.0"
   }
 }
