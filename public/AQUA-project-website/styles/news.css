@@ -1,0 +1,48 @@
+.news {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.article {
+    margin: 40px;
+}
+
+.article {
+    padding-bottom: 100px;
+}
+
+.news img {
+    width: 175px;
+    height: 125px;
+    float: left;
+    padding: 0 10px;
+}
+
+.article p {
+    float: left;
+    line-height: 125px;
+    padding-left: 10px;
+    font-size: 1vw;
+}
+
+.news .column-two .main-article img {
+    width: 500px;
+    height: 300px;
+}
+
+.first {
+    padding-top: 30px;
+}
+
+.main-article p {
+    float: revert;
+    text-align: center;
+    font-size: 1.2vw;
+}
+
+
+/* .sub-articles {
+    padding-top:340px;
+}*/

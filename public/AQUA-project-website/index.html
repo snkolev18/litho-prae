@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home page</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -12,10 +12,14 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/FJvzFPT.png">
+
     <link rel="stylesheet" type="text/css" href="styles/reset.css">
     <link rel="stylesheet" type="text/css" href="styles/navbar.css">
     <link rel="stylesheet" type="text/css" href="styles/swiper.css">
     <link rel="stylesheet" type="text/css" href="styles/cards.css">
+    <link rel="stylesheet" type="text/css" href="styles/news.css">
+
 
     <script src="https://unpkg.com/swiper/swiper-bundle.js" defer></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
@@ -25,29 +29,30 @@
     <script src="js/toggleNav.js" defer></script>
 
 </head>
+
 <body>
-<header>
-    <nav class="main-nav">
-        <div>
-            <a class="brand" href="#">Brand</a>
-        </div>
+    <header>
+        <nav class="main-nav">
+            <div>
+                <a class="brand" href="#">Brand</a>
+            </div>
 
-        <ul class="main-nav-ul" id="mainNavUl">
-            <li><a href="#">Home page</a></li>
-            <li><a href="#">Second page</a></li>
-            <li><a href="#">Third page</a></li>
-            <li><a href="#">Fourth page</a></li>
-            <li><a href="#">Fifth page</a></li>
-        </ul>
+            <ul class="main-nav-ul" id="mainNavUl">
+                <li><a href="#">Home page</a></li>
+                <li><a href="#">Second page</a></li>
+                <li><a href="#">Third page</a></li>
+                <li><a href="#">Fourth page</a></li>
+                <li><a href="#">Fifth page</a></li>
+            </ul>
 
-        <div class="menu-toggle-btn" onclick="onToggleNav()">
-            <i class="bi bi-list" id="menuIcon"></i>
-        </div>
-    </nav>
-</header>
+            <div class="menu-toggle-btn" onclick="onToggleNav()">
+                <i class="bi bi-list" id="menuIcon"></i>
+            </div>
+        </nav>
+    </header>
 
 
-<!-- Swiper -->
+    <!-- Swiper -->
     <div class="swiper-container mySwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide slide-1"></div>
@@ -65,7 +70,7 @@
         <div class="swiper-pagination"></div>
     </div>
 
-
+    <!--
     <div class="news">
 
         <div class="news-card">
@@ -134,6 +139,53 @@
                 </div>
             </div>
 
+        </div> -->
+
+
+    <div class="news">
+        <div class="column-one">
+            <div class="article">
+                <img src="https://i.imgur.com/GcrBITp.jpg">
+                <p>Lorem ipsum dolor sit amet</p>
+            </div>
+            <div class="article">
+                <img src="https://i.imgur.com/GcrBITp.jpg">
+                <p>Lorem ipsum dolor sit amet</p>
+            </div>
+            <div class="article">
+                <img src="https://i.imgur.com/GcrBITp.jpg">
+                <p>Lorem ipsum dolor sit amet</p>
+            </div>
+            <div class="article">
+                <img src="https://i.imgur.com/GcrBITp.jpg">
+                <p>Lorem ipsum dolor sit amet</p>
+            </div>
+            <div class="article">
+                <img src="https://i.imgur.com/GcrBITp.jpg">
+                <p>Lorem ipsum dolor sit amet</p>
+            </div>
+
         </div>
+        <div class="column-two">
+            <div class="main-article first">
+                <img src="https://i.imgur.com/GXYhmXV.jpg">
+                <br>
+                <p>Lorem ipsum dolor sit amet</p>
+            </div>
+            <div class="main-article">
+                <img src="https://i.imgur.com/GXYhmXV.jpg">
+            </div>
+
+            <!--<div class="sub-articles">
+                    <div class="sub-article">
+                        <img src="https://i.imgur.com/TMOCoHS.jpg">
+                    </div>
+                    <div class="sub-article">
+                        <img src="https://i.imgur.com/TMOCoHS.jpg">
+                    </div>
+                </div>-->
+        </div>
+    </div>
 </body>
+
 </html>
