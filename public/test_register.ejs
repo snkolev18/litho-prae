@@ -13,22 +13,33 @@
   <div class="container">
     <h1>Register</h1>
     <p>Please fill in this form to create an account.</p>
+	<%
+		if (errors) {
+			%> <ul> <%
+			for(let error of errors) {
+			%>
+				<li><%=error.message%></li>
+			<%
+			}
+			%> </ul> <%
+		}
+	%>
     <hr>
 
 	<label for="text"><b>First name</b></label>
-    <input type="text" placeholder="Enter First name" name="fname" id="fname" required>
+    <input type="text" placeholder="Enter First name" name="fname" id="fname" value="f1" required>
 
 	<label for="text"><b>Last name</b></label>
-    <input type="text" placeholder="Enter Last name" name="lname" id="lname" required>
+    <input type="text" placeholder="Enter Last name" name="lname" id="lname" value="neshto si tam1" required>
 
     <label for="text"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="usr" id="usr" required>
+    <input type="text" placeholder="Enter Username" name="usr" id="usr"  value="username" required>
 
 	<label for="email"><b>Email</b></label>
-    <input type="email" placeholder="Enter Email" name="email" id="email" required>
+    <input type="email" placeholder="Enter Email" name="email" id="email"  value="os@os.com" required>
 
     <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+    <input type="password" placeholder="Enter Password" name="psw" id="psw"  value="hmm" required>
 
     <button type="submit" class="registerbtn">Register</button>
   </div>
