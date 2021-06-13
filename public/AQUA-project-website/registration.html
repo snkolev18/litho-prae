@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home page</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/FJvzFPT.png">
+
+    <link rel="stylesheet" type="text/css" href="styles/reset.css">
+    <link rel="stylesheet" type="text/css" href="styles/navbar.css">
+    <link rel="stylesheet" type="text/css" href="styles/registration.css">
+
+
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.js" defer></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+    <script src="js/swiper.js" defer></script>
+
+
+    <script src="js/toggleNav.js" defer></script>
+
+</head>
+
+<body>
+    <header>
+        <nav class="main-nav">
+            <div>
+                <a class="brand" href="#">Brand</a>
+            </div>
+
+            <ul class="main-nav-ul" id="mainNavUl">
+                <li><a href="#">Home page</a></li>
+                <li><a href="#">Second page</a></li>
+                <li><a href="#">Third page</a></li>
+                <li><a href="#">Fourth page</a></li>
+                <li><a href="#">Fifth page</a></li>
+
+            </ul>
+
+            <div class="menu-toggle-btn" onclick="onToggleNav()">
+                <i class="bi bi-list" id="menuIcon"></i>
+            </div>
+        </nav>
+    </header>
+
+    <div class="form">
+        <h1>Create an account</h1>
+        <p>Already have an account? Sign in</p>
+        <form>
+            <label for="fname">First name:</label>
+            <input type="text" name="fname" id="fname">
+            <label for="lname">Last name:</label>
+            <input type="text" name="lname" id="lname">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email">
+            <label for="password">Enter password:</label>
+            <input type="password" name="password" id="password">
+            <label for="repeatPassword">Repeat password:</label>
+            <input type="password" name="password" id="password">
+
+            <button>Create account</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
