@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+	<title>Document</title>
+</head>
+<body>
+	<form action="/sendEmail" method="POST">
+
+    <label for="text"><b>First name</b></label>
+    <input type="text" placeholder="Enter First name" name="fname" id="fname" value="Stoyan" required>
+
+	<label for="text"><b>Last name</b></label>
+    <input type="text" placeholder="Enter Last name" name="lname" id="lname" value="Kolev" required>
+
+	<label for="email"><b>Email</b></label>
+    <input type="email" placeholder="Enter Email" name="email" id="email"  value="snkos@os.com" required>
+
+    <label for="topic"><b>Topic</b></label>
+    <input type="text" placeholder="Enter Topic" name="topic" id="topic"  value="Novo vodoraslo" required>
+
+	<label for="msg"><b>Message</b></label>
+    <input type="text" placeholder="Enter Message" name="msg" id="msg"  value="Namerih vodoraslo" required>
+
+    <button type="submit" class="registerbtn">Register</button>
+</form>
+</body>
+</html>
