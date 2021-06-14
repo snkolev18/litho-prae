@@ -3,16 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: ''
 labels: Backend
-assignees: snkolev18, eiribarev18, SSUzunov19
-
----
-
----
-name: Bug report
-about: Create a report to help us improve
-title: "[BUG TITLE]"
-labels: bug
-assignees: eiribarev18, snkolev18, ssuzunov19
+assignees: eiribarev18, snkolev18, SSUzunov19
 
 ---
 
