@@ -23,6 +23,7 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.js" defer></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
     <script src="js/swiper.js" defer></script>
+    <script src="js/validation.js" defer></script>
 
 
     <script src="js/toggleNav.js" defer></script>
@@ -56,15 +57,41 @@
         <p>Already have an account? Sign in</p>
         <form>
             <label for="fname">First name:</label>
-            <input type="text" name="fname" id="fname">
+            <input type="text" id="fname" class="form-control" onblur="onFocusOut('fname')" onkeyup="onKeyUp('fname')">
+            <p id="messageFirstName" class="message">
+                <small>The name field is required.</small>
+            </p>
             <label for="lname">Last name:</label>
-            <input type="text" name="lname" id="lname">
+            <input type="text" name="lname" id="lname" class="form-control" onblur="onFocusOut('lname')" onkeyup="onKeyUp('lname')">
+            <p id="messageLastName" class="message">
+                <small>The name field is required.</small>
+            </p>
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email">
+            <input type="email" id="email" class="form-control" onblur="onFocusOut('email')" onkeyup="onKeyUp('email')">
+            <p id="messageEmail" class="message">
+                <small>The email field is required.</small>
+            </p>
+            <p id="messageValidateRegexEmail" class="message">
+                <small>Please enter an valid email.</small>
+            </p>
+
+
             <label for="password">Enter password:</label>
-            <input type="password" name="password" id="password">
-            <label for="repeatPassword">Repeat password:</label>
-            <input type="password" name="password" id="password">
+            <input type="password" id="password" class="form-control" onblur="onFocusOut('password')" onkeyup="onKeyUp('password')">
+            <p id="messagePassword" class="message">
+                <small>The password field is required.</small>
+            </p>
+            <p id="messagePasswordMin" class="message">
+                <small>The password field must contain more than 6 symbols.</small>
+            </p>
+            <label for="passwordConfirmation">Confirm password:</label>
+            <input type="password" name="passwordConfirmation" id="passwordConfirmation" class="form-control" onblur="onFocusOut('passwordConfirmation')" onkeyup="onKeyUp('passwordConfirmation')">
+            <p id="messagePasswordConfirmation" class="message">
+                <small>The confirm password field is required.</small>
+            </p>
+            <p id="messagePasswordNotConfirmed" class="message">
+                <small>The passwords are not equal.</small>
+            </p>
 
             <button>Create account</button>
         </form>

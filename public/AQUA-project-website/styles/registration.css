@@ -61,3 +61,8 @@ body {
     cursor: pointer;
     background-color: #0c4ea0;
 }
+
+.message {
+    display: none;
+    color: red;
+}
