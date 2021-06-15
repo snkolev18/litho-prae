@@ -2,11 +2,12 @@ const express 		= require("express");
 const bodyParser 	= require("body-parser");
 const session 		= require("express-session");
 const app 			= express();
-const { Database } 	= require("./database");
+const { Database } 	= require("./utils/database");
 // const { Logger }	= require("./log/logger");
 const { log } 		= require("./log/logging");
 const { ArticleRepository } = require("./repositories/ArticleRepository");
 const { Mailer } 	= require("./utils/mailer");
+const inputValidation=require("./utils/validation");
 const helmet 		= require("helmet");
 const mailer 		= new Mailer();
 // const logger 		= new Logger();
@@ -53,8 +54,8 @@ app.post("/registerUser", async function(req, res) {
 });
 
 app.get("/articles", async function(req, res) {
-	const _aritcles_ = await articles.getAll();
-	res.json(_aritcles_);
+	const _articles_ = await articles.getAll();
+	res.json(_articles_);
 });
 
 app.get("/contact", function(req, res) {
