@@ -7,7 +7,7 @@ const { Database } 	= require("./utils/database");
 const { log } 		= require("./log/logging");
 const { ArticleRepository } = require("./repositories/ArticleRepository");
 const { Mailer } 	= require("./utils/mailer");
-const inputValidation=require("./utils/validation");
+const inputValidation = require("./utils/validation");
 const helmet 		= require("helmet");
 const mailer 		= new Mailer();
 // const logger 		= new Logger();
@@ -45,7 +45,11 @@ app.post("/registerUser", async function(req, res) {
 
 	console.log(usrData);
 
-	req.session.errors = [{ message: "I like cookies!" }];
+	const errors = inputValidation.checkUserRegistrationData(usrData);
+
+	if (errors.length) req.session.errors = errors;
+	else req.session.errors = null;
+
 	res.redirect("/register");
 
 	// await db.registerUserSP(usrData.fname, usrData.lname, usrData.usr, usrData.email, usrData.psw, 0);
