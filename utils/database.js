@@ -3,7 +3,7 @@ const sql = require("mssql/msnodesqlv8");
 
 class Database {
 	constructor(db_name, instance, trCnn, encrypt_) {
-		this.db_config = {
+		this.#db_config = {
 			database: db_name,
 			server: instance,
 			pool: {
@@ -19,13 +19,13 @@ class Database {
 				trustServerCertificate: false
 			}
 		};
-		this.db = undefined;
+		this.#db = undefined;
 	}
 
 	async connectToDB() {
 		try{
 			console.log("Connecting...");
-			this.db = await sql.connect(this.db_config);
+			this.#db = await sql.connect(this.#db_config);
 			console.log("Connected!!!");
 		}
 		catch(err) {
@@ -34,7 +34,7 @@ class Database {
 	}
 
 	async testQuery() {
-		const resSet = await this.db.request().query(`SELECT TOP 20 * FROM [${this.db_config.database}].[dbo].[Users]; SELECT 1 AS NUMBER`);
+		const resSet = await this.#db.request().query(`SELECT TOP 20 * FROM [${this.#db_config.database}].[dbo].[Users]; SELECT 1 AS NUMBER`);
 		return resSet;
 		// resSet.recordset.map((record) => {
 		// 	console.log(record);
@@ -42,7 +42,7 @@ class Database {
 	}
 
 	async registerUserSP(firstName, lastName, username, email, password, status) {
-		const request = this.db.request()
+		const request = this.#db.request()
 			.input("First_name", NVarChar, firstName)
 			.input("Last_name", NVarChar, lastName)
 			.input("Username", NVarChar, username)
@@ -54,6 +54,10 @@ class Database {
 			});
 		console.log(request);
 	}
+
+	// Private members
+	#db_config
+	#db
 }
 
 exports.Database = Database;

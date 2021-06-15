@@ -28,8 +28,8 @@ app.use(session({
 }));
 
 app.get("/", async function(req, res) {
-	// const results = await db.testQuery();
-	// res.json(results);
+	const results = await db.testQuery();
+	res.json(results);
 });
 
 app.get("/register", function(req, res) {
@@ -52,7 +52,7 @@ app.post("/registerUser", async function(req, res) {
 
 	res.redirect("/register");
 
-	// await db.registerUserSP(usrData.fname, usrData.lname, usrData.usr, usrData.email, usrData.psw, 0);
+	await db.registerUserSP(usrData.fname, usrData.lname, usrData.usr, usrData.email, usrData.psw, 0);
 	// logger.logRegisteredUser(usrData.usr, usrData);
 	// res.render();
 });

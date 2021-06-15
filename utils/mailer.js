@@ -3,7 +3,7 @@ require("dotenv").config();
 
 class Mailer {
 	constructor() {
-		this.configuration = {
+		this.#configuration = {
 			host: process.env.gmailHost,
 			port: process.env.smtpPort,
 			secure: true,
@@ -12,11 +12,11 @@ class Mailer {
 				pass: process.env.gmailPasswd
 			}
 		};
-		this.mailTransporter = mailer.createTransport(this.configuration);
+		this.#mailTransporter = mailer.createTransport(this.#configuration);
 	}
 
 	send(sender) {
-		this.mailBody = {
+		this.#mailBody = {
 			from: sender.email,
 			to: process.env.gmailEmail,
 			subject: sender.topic,
@@ -26,13 +26,18 @@ class Mailer {
 			`
 		};
 
-		this.mailTransporter.sendMail(this.mailBody, function(err, info) {
+		this.#mailTransporter.sendMail(this.#mailBody, function(err, info) {
 			if(err) {
 				console.log(err);
 			}
 			console.log(info);
 		});
 	}
+
+	// Private members
+	#mailBody
+	#mailTransporter
+	#configuration
 }
 
 exports.Mailer = Mailer;
