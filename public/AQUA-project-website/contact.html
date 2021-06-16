@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact us</title>
+
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/FJvzFPT.png">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="styles/reset.css">
+    <link rel="stylesheet" type="text/css" href="styles/contact.css">
+</head>
+
+<body>
+    <div class="form">
+        <h1>Contact us</h1>
+        <p>Please let us know your query</p>
+        <form>
+            <label for="fname">Name:</label>
+            <input type="text" id="fname" class="form-control" onblur="onFocusOut('fname')" onkeyup="onKeyUp('fname')">
+            <p id="messageFirstName" class="message">
+                <small>The name field is required.</small>
+            </p>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" class="form-control" onblur="onFocusOut('email')" onkeyup="onKeyUp('email')">
+            <p id="messageEmail" class="message">
+                <small>The email field is required.</small>
+            </p>
+            <p id="messageValidateRegexEmail" class="message">
+                <small>Please enter an valid email.</small>
+            </p>
+
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" class="form-control" onblur="onFocusOut('subject')" onkeyup="onKeyUp('subject')">
+            <p id="messageSubject" class="message">
+                <small>The subject field is required.</small>
+            </p>
+            <label for="message">Message:</label>
+            <textarea name="message" id="" cols="70" rows="10"></textarea>
+            <button>Submit</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
