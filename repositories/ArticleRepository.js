@@ -20,7 +20,12 @@ class ArticleRepository {
 
 	async getAll() {
 		const result = await this.db.request().query(`SELECT * FROM [${this.options.database}].[dbo].[Articles]`);
+		// return result
 		return result.recordset;
+	}
+
+	async create(article) {
+		// exec SP (article.name, arg)
 	}
 }
 
