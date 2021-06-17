@@ -19,14 +19,17 @@ class ArticleRepository {
 	}
 
 	async getAll() {
-		const result = await this.db.request().query(`SELECT * FROM [${this.options.database}].[dbo].[Articles]`);
+		const result = await this.db.request().query("SELECT * FROM vAllArticles");
 		// return result
 		return result.recordset;
 	}
 
+	// TO DO
 	async create(article) {
 		// exec SP (article.name, arg)
 	}
+
+	// TO DO: Implement SQL View to get a particular article
 }
 
 exports.ArticleRepository = ArticleRepository;

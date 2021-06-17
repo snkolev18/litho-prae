@@ -1,4 +1,4 @@
-const { NVarChar, VarBinary, TinyInt } = require("mssql/msnodesqlv8");
+const { NVarChar, VarBinary, TinyInt, SmallInt } = require("mssql/msnodesqlv8");
 const sql = require("mssql/msnodesqlv8");
 
 class Database {
@@ -44,7 +44,7 @@ class Database {
 	async registerUserSP(firstName, lastName, username, email, password, status) {
 		try {
 			const result = await this.#db.request()
-				.input("First_Name", NVarChar, firstName)
+				.input("FirstName", NVarChar, firstName)
 				.input("LastName", NVarChar, lastName)
 				.input("Username", NVarChar, username)
 				.input("Email", NVarChar, email)
@@ -53,10 +53,22 @@ class Database {
 				.execute("RegisterAUser");
 				console.log(result);
 		} catch(e) {
-			console.log("EXCEPTION THROWN!")
+			return 69;
+		}
+	}
+
+	async verifyLoginSP(username, password) {
+		try {
+			const result = await this.#db.request()
+				.input("Username", NVarChar, username)
+				.input("Password", NVarChar, password)
+				.output("IsVerified", SmallInt)
+				.execute("VerifyLogin")
+			return result.output.IsVerified
+		} catch(e) {
+			console.log("EXCEPTION THROWN!!!");
 			console.log(e);
 		}
-
 	}
 
 	// Private members

@@ -11,10 +11,13 @@ const db 			= new Database("litho-prae-db", ".\\SQLExpress", true, false);
 const articles = new ArticleRepository();
 const PORT 			= process.env.PORT || 1337;
 
+// Middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true }));
-app.set("views", "./public");
 app.use(helmet());
+
+// Configuring express to look for .ejs file in ./public directory
+app.set("views", "./public");
 
 
 app.use(session({
@@ -23,7 +26,7 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-require("./router/router")(app);
+// require("./router/router")(app);
 
 app.get("/", async function(req, res) {
 	const results = await db.testQuery();
@@ -37,25 +40,20 @@ app.get("/register", function(req, res) {
 });
 
 app.post("/registerUser", async function(req, res) {
+
 	const usrData = req.body;
-
 	log.info(usrData, `Trying to register a user ${usrData.email}`);
-
 	console.log(usrData);
-
 	const errors = inputValidation.checkUserRegistrationData(usrData);
-
 	if (errors.length) {
 		req.session.errors = errors;
 	}
 	else {
-		req.session.errors = null;
-		await db.registerUserSP(usrData.fname, usrData.lname, usrData.usr, usrData.email, usrData.psw, 0);
-		// logger.logRegisteredUser(usrData.usr, usrData);
+		req.session.errors = [];
+		const sc = await db.registerUserSP(usrData.fname, usrData.lname, usrData.usr, usrData.email, usrData.psw, 0);
+		if (sc) req.session.errors.push({ message : "Account with this username or email already exist!" });
 	}
 	res.redirect("/register");
-
-	// res.render();
 });
 
 app.get("/articles", async function(req, res) {
@@ -70,6 +68,19 @@ app.post("/articles", async function(req, res) {
 	});
 	res.json(_articles_);
 });
+
+app.get("/login", function(req, res) {
+	res.render("test_login.ejs");
+});
+
+app.post("/login", async function(req, res) {
+	const loginUsrData = req.body;
+	console.log(loginUsrData);
+	const result = await db.verifyLoginSP(loginUsrData.usr, loginUsrData.psw);
+	console.log(result);
+	if (result) res.send("Qsha, lognat si");
+	else res.send("Qsha, Ne si lognat");
+})
 
 // app.get("/contact", function(req, res) {
 // 	res.render("test_contact.ejs");

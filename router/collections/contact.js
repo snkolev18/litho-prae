@@ -2,8 +2,8 @@
 
 const { Mailer } 	= require("../../utils/mailer");
 const mailer 		= new Mailer();
-const express = require("express");
 
+const express = require("express");
 const router = express.Router();
 
 console.log("ne rabotq");
