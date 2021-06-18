@@ -6,8 +6,9 @@ const { Database } 	= require("./utils/database");
 const { log } 		= require("./log/logging");
 const { ArticleRepository } = require("./repositories/ArticleRepository");
 const inputValidation = require("./utils/validation");
+const { DbEx } = require("./utils/dbEx");
 const helmet 		= require("helmet");
-const db 			= new Database("litho-prae-db", ".\\SQLExpress", true, false);
+const db 			= new Database();
 const articles = new ArticleRepository();
 const PORT 			= process.env.PORT || 1337;
 
@@ -27,6 +28,8 @@ app.use(session({
 }));
 
 // require("./router/router")(app);
+
+
 
 app.get("/", async function(req, res) {
 	const results = await db.testQuery();
@@ -57,6 +60,11 @@ app.post("/registerUser", async function(req, res) {
 });
 
 app.get("/articles", async function(req, res) {
+	if (!req.session.token) {
+		req.session.returnUrl = req.originalUrl;
+		res.redirect("/login");
+		return;
+	}
 	const _articles_ = await articles.getAll();
 	res.json(_articles_);
 });
@@ -78,9 +86,27 @@ app.post("/login", async function(req, res) {
 	console.log(loginUsrData);
 	const result = await db.verifyLoginSP(loginUsrData.usr, loginUsrData.psw);
 	console.log(result);
-	if (result) res.send("Qsha, lognat si");
-	else res.send("Qsha, Ne si lognat");
-})
+
+	if (result) {
+		req.session.token = {
+			id: result,
+			username: loginUsrData.usr
+		};
+
+		console.log(req.session.token);
+
+		if (req.session.returnUrl) {
+			res.redirect(req.session.returnUrl);
+		}
+		else {
+			res.send("Qsha, lognat si");
+		}
+	}
+	else {
+		req.session.isLogged = false;
+		res.send("Qsha, Ne si lognat");
+	}
+});
 
 // app.get("/contact", function(req, res) {
 // 	res.render("test_contact.ejs");
@@ -92,8 +118,16 @@ app.post("/login", async function(req, res) {
 // 	mailer.send(mailBody);
 // });
 
+app.use(async (req, res, next) => {
+	console.log("DEFAULT EXCEPTION HANDLER");
+	next();
+});
+
 app.listen(PORT, async () => {
 	// console.log(results);
+	console.log("Connecting to DB...");
 	await db.connectToDB();
 	console.log("Raboti");
+	const s = await DbEx.getInstance();
 });
+

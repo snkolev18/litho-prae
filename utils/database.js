@@ -1,25 +1,12 @@
-const { NVarChar, VarBinary, TinyInt, SmallInt } = require("mssql/msnodesqlv8");
+const { NVarChar, VarBinary, TinyInt, SmallInt, Int } = require("mssql/msnodesqlv8");
 const sql = require("mssql/msnodesqlv8");
+const { DbEx } = require("./dbEx");
+const { config } = require("./db_config");
 
 class Database {
-	constructor(db_name, instance, trCnn, encrypt_) {
-		this.#db_config = {
-			database: db_name,
-			server: instance,
-			pool: {
-				max: 10,
-				min: 0,
-				idleTimeoutMillis: 30000
-			},
-			options: {
-				trustedConnection: trCnn,
-				// for Azure
-				encrypt: encrypt_,
-				// change to true for local dev / self-signed certs
-				trustServerCertificate: false
-			}
-		};
-		this.#db = undefined;
+	constructor() {
+		this.#db = DbEx.getExistingInstance();
+		this.#db_config = config;
 	}
 
 	async connectToDB() {
@@ -34,7 +21,9 @@ class Database {
 	}
 
 	async testQuery() {
-		const resSet = await this.#db.request().query(`SELECT TOP 20 * FROM [${this.#db_config.database}].[dbo].[Users]; SELECT 1 AS NUMBER`);
+		const resSet = await DbEx.getExistingInstance()
+			.request()
+			.query(`SELECT TOP 20 * FROM [${this.#db_config.database}].[dbo].[Users]; SELECT 1 AS NUMBER`);
 		return resSet;
 		// resSet.recordset.map((record) => {
 		// 	console.log(record);
@@ -62,7 +51,7 @@ class Database {
 			const result = await this.#db.request()
 				.input("Username", NVarChar, username)
 				.input("Password", NVarChar, password)
-				.output("IsVerified", SmallInt)
+				.output("IsVerified", Int)
 				.execute("VerifyLogin")
 			return result.output.IsVerified
 		} catch(e) {
