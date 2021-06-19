@@ -6,6 +6,7 @@ const { Database } 	= require("./utils/database");
 const { log } 		= require("./log/logging");
 const { ArticleRepository } = require("./repositories/ArticleRepository");
 const inputValidation = require("./utils/validation");
+const Middlewares = require("./middlewares/isAuthenticated");
 const { DbEx } = require("./utils/dbEx");
 const helmet 		= require("helmet");
 const db 			= new Database();
@@ -57,12 +58,17 @@ app.post("/registerUser", async function(req, res) {
 	res.redirect("/register");
 });
 
-app.get("/articles", async function(req, res) {
-	if (!req.session.token) {
-		req.session.returnUrl = req.originalUrl;
-		res.redirect("/login");
-		return;
-	}
+// app.get("/articles", async function(req, res) {
+// 	if (!req.session.token) {
+// 		req.session.returnUrl = req.originalUrl;
+// 		res.redirect("/login");
+// 		return;
+// 	}
+// 	const _articles_ = await articles.getAll();
+// 	res.json(_articles_);
+// });
+
+app.get("/articles", Middlewares.isAuthenticated, async function(req, res) {
 	const _articles_ = await articles.getAll();
 	res.json(_articles_);
 });
@@ -125,7 +131,7 @@ app.get("/taenpanel", function(req, res) {
 
 app.get("/article/:id", async function(req, res) {
 	if(isNaN(req.params.id)) {
-		res.send({ message: "Invalid article"});
+		res.send({ message: "Invalid article" });
 	}
 	else {
 		const id = parseInt(req.params.id);
