@@ -6,7 +6,7 @@ const { Database } 	= require("./utils/database");
 const { log } 		= require("./log/logging");
 const { ArticleRepository } = require("./repositories/ArticleRepository");
 const inputValidation = require("./utils/validation");
-const Middlewares = require("./middlewares/isAuthenticated");
+const Middlewares = require("./middlewares/auth");
 const { DbEx } = require("./utils/dbEx");
 const helmet 		= require("helmet");
 const db 			= new Database();
@@ -115,18 +115,22 @@ app.post("/login", async function(req, res) {
 	}
 });
 
-app.get("/taenpanel", function(req, res) {
-	if(req.session.token) {
-		if(req.session.token.username === "rootcheto") {
-			res.send("Opa shefe");
-		}
-		else{
-			res.status(401).send("You are not allowed to view that page");
-		}
-	}
-	else {
-		res.redirect("/login");
-	}
+// app.get("/taenpanel", function(req, res) {
+// 	if(req.session.token) {
+// 		if(req.session.token.username === "rootcheto") {
+// 			res.send("Opa shefe");
+// 		}
+// 		else{
+// 			res.status(401).send("You are not allowed to view that page");
+// 		}
+// 	}
+// 	else {
+// 		res.redirect("/login");
+// 	}
+// });
+
+app.get("/taenpanel", Middlewares.isAdmin, async function(req, res) {
+	res.send("Opa shefe");
 });
 
 app.get("/article/:id", async function(req, res) {
