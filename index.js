@@ -15,11 +15,11 @@ const PORT 			= process.env.PORT || 1337;
 // Middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true }));
+app.disable("x-powered-by");
 app.use(helmet());
 
 // Configuring express to look for .ejs file in ./public directory
 app.set("views", "./public");
-
 
 app.use(session({
 	secret: "keyboard cat",
@@ -28,8 +28,6 @@ app.use(session({
 }));
 
 // require("./router/router")(app);
-
-
 
 app.get("/", async function(req, res) {
 	const results = await db.testQuery();
@@ -78,6 +76,9 @@ app.post("/articles", async function(req, res) {
 });
 
 app.get("/login", function(req, res) {
+	if(req.session.token) {
+		req.session.token = null;
+	}
 	res.render("test_login.ejs");
 });
 
@@ -100,11 +101,25 @@ app.post("/login", async function(req, res) {
 		}
 		else {
 			res.send("Qsha, lognat si");
+			console.log(`Current user ${req.session.token.username}`);
 		}
 	}
 	else {
-		req.session.isLogged = false;
 		res.send("Qsha, Ne si lognat");
+	}
+});
+
+app.get("/taenpanel", function(req, res) {
+	if(req.session.token) {
+		if(req.session.token.username === "rootcheto") {
+			res.send("Opa shefe");
+		}
+		else{
+			res.status(401).send("You are not allowed to view that page");
+		}
+	}
+	else {
+		res.redirect("/login");
 	}
 });
 
@@ -117,6 +132,10 @@ app.post("/login", async function(req, res) {
 // 	console.log(mailBody);
 // 	mailer.send(mailBody);
 // });
+
+app.get("*", function(_, res) {
+	res.status(404).send("<h1 align=\"center\">Page not found</h1>");
+});
 
 app.use(async (req, res, next) => {
 	console.log("DEFAULT EXCEPTION HANDLER");
