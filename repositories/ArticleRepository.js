@@ -24,6 +24,23 @@ class ArticleRepository {
 		return result.recordset;
 	}
 
+	async getArticleById(id) {
+		let articleOut = undefined;
+		const articles = await this.getAll();
+		articles.map(article => {
+			console.log(`Current id: ${article.Id} ${typeof (article.Id)}`);
+			console.log(`Searching for id: ${id} ${typeof (id)}`);
+			if (id === article.Id) {
+				articleOut = article;
+			}
+		});
+
+		if (articleOut) {
+			return articleOut;
+		}
+		return "Article not found";
+	}
+
 	// TO DO
 	async create(article) {
 		// exec SP (article.name, arg)

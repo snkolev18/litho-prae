@@ -123,6 +123,18 @@ app.get("/taenpanel", function(req, res) {
 	}
 });
 
+app.get("/article/:id", async function(req, res) {
+	if(isNaN(req.params.id)) {
+		res.send({ message: "Invalid article"});
+	}
+	else {
+		const id = parseInt(req.params.id);
+		const article = await articles.getArticleById(id);
+		console.log(article);
+		res.send(article);
+	}
+});
+
 // app.get("/contact", function(req, res) {
 // 	res.render("test_contact.ejs");
 // });
