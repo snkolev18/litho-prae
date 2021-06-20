@@ -6,7 +6,6 @@ const mailer 		= new Mailer();
 const express = require("express");
 const router = express.Router();
 
-console.log("ne rabotq");
 router.get("/", function(req, res) {
 	res.render("test_contact.ejs");
 });
