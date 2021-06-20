@@ -4,12 +4,12 @@ require("dotenv").config();
 class Mailer {
 	constructor() {
 		this.#configuration = {
-			host: process.env.gmailHost,
-			port: process.env.smtpPort,
+			host: process.env.HOST,
+			port: process.env.SMTP_PORT,
 			secure: true,
 			auth: {
-				user: process.env.gmailEmail,
-				pass: process.env.gmailPasswd
+				user: process.env.EMAIL,
+				pass: process.env.EMAIL_PASSWORD
 			}
 		};
 		this.#mailTransporter = mailer.createTransport(this.#configuration);
@@ -18,7 +18,7 @@ class Mailer {
 	send(sender) {
 		this.#mailBody = {
 			from: sender.email,
-			to: process.env.gmailEmail,
+			to: process.env.EMAIL,
 			subject: sender.subject,
 			html: `
 				<h1> ${sender.fname} sent a message </h1>
