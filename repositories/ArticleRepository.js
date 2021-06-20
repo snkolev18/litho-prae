@@ -59,6 +59,10 @@ class ArticleRepository {
 		}
 	}
 
+	async update(article) {
+
+	}
+
 	// TO DO: Implement SQL View to get a particular article
 }
 

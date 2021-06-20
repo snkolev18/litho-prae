@@ -14,7 +14,7 @@
 	<div class = "container">
         <h1>A list of all articles</h1>
     <div class = "row">
-        <% for(const article in articles){ %>
+        <% [...articles].map(article => { %>
         <div class="col-md-4">
             <div class="card" style="width: 18rem;">
                 <img src="..." class="card-img-top" alt="...">
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <% }%>
+        <% })%>
     </div>
 </div>
 </body>

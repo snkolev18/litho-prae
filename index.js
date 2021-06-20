@@ -24,11 +24,17 @@ app.set("views", "./public");
 
 app.use(session({
 	secret: "keyboard cat",
+	secure: true,
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: true,
+	cookie: {
+		httpOnly: true,
+		// Expires after 1 day
+		expires: 24 * 60 * 60 * 1000
+	}
 }));
 
-// require("./router/router")(app);
+require("./router/router")(app);
 
 app.get("/", async function(req, res) {
 	const results = await db.testQuery();
@@ -58,26 +64,8 @@ app.post("/registerUser", async function(req, res) {
 	res.redirect("/register");
 });
 
-// app.get("/articles", async function(req, res) {
-// 	if (!req.session.token) {
-// 		req.session.returnUrl = req.originalUrl;
-// 		res.redirect("/login");
-// 		return;
-// 	}
-// 	const _articles_ = await articles.getAll();
-// 	res.json(_articles_);
-// });
-
 app.get("/articles", Middlewares.isAuthenticated, async function(req, res) {
 	const _articles_ = await articles.getAll();
-	res.json(_articles_);
-});
-
-app.post("/articles", async function(req, res) {
-	const _articles_ = await articles.create({
-		name: req.body.name,
-		body: req.body.body
-	});
 	res.json(_articles_);
 });
 
@@ -117,20 +105,6 @@ app.post("/login", async function(req, res) {
 	}
 });
 
-// app.get("/taenpanel", function(req, res) {
-// 	if(req.session.token) {
-// 		if(req.session.token.username === "rootcheto") {
-// 			res.send("Opa shefe");
-// 		}
-// 		else{
-// 			res.status(401).send("You are not allowed to view that page");
-// 		}
-// 	}
-// 	else {
-// 		res.redirect("/login");
-// 	}
-// });
-
 app.get("/taenpanel", Middlewares.isAdmin, async function(req, res) {
 	res.send("Opa shefe");
 });
@@ -141,6 +115,17 @@ app.get("/taenpanel/allArticles", Middlewares.isAdmin, async function(req, res) 
 	res.render("test_adminArticles.ejs", {
 		articles: _articles_
 	});
+});
+
+app.get("/taenpanel/allArticles/edit/:id", Middlewares.isAdmin, async function(req, res) {
+	if(isNaN(req.params.id)) {
+		res.send({ message: "Invalid article" });
+	}
+	else {
+		const id = parseInt(req.params.id);
+		const article = await articles.getArticleById(id);
+
+	}
 });
 
 app.get("/article/:id", async function(req, res) {
@@ -164,16 +149,6 @@ app.post("/articles/new", Middlewares.isAuthenticated, async function(req, res) 
 	console.log(`Receiving new article: ${article}`);
 	await articles.create(article, new Date(), req.session.token.id);
 });
-
-// app.get("/contact", function(req, res) {
-// 	res.render("test_contact.ejs");
-// });
-
-// app.post("/sendEmail", function(req, res) {
-// 	const mailBody = req.body;
-// 	console.log(mailBody);
-// 	mailer.send(mailBody);
-// });
 
 app.get("*", function(_, res) {
 	res.status(404).send("<h1 align=\"center\">Page not found</h1>");
