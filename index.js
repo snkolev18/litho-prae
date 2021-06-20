@@ -94,10 +94,12 @@ app.post("/login", async function(req, res) {
 	const result = await db.verifyLoginSP(loginUsrData.usr, loginUsrData.psw);
 	console.log(result);
 
-	if (result) {
+	if (result.idVerified) {
 		req.session.token = {
-			id: result,
-			username: loginUsrData.usr
+			id: result.idVerified,
+			username: loginUsrData.usr,
+			roleId: result.roleId,
+			status: result.status
 		};
 
 		console.log(req.session.token);
@@ -133,6 +135,14 @@ app.get("/taenpanel", Middlewares.isAdmin, async function(req, res) {
 	res.send("Opa shefe");
 });
 
+app.get("/taenpanel/allArticles", Middlewares.isAdmin, async function(req, res) {
+	const _articles_ = await articles.getAll();
+	console.log(_articles_);
+	res.render("test_adminArticles.ejs", {
+		articles: _articles_
+	});
+});
+
 app.get("/article/:id", async function(req, res) {
 	if(isNaN(req.params.id)) {
 		res.send({ message: "Invalid article" });
@@ -143,6 +153,16 @@ app.get("/article/:id", async function(req, res) {
 		console.log(article);
 		res.send(article);
 	}
+});
+
+app.get("/articles/new", Middlewares.isAuthenticated, async function(req, res) {
+	res.render("test_createArticle.ejs");
+});
+
+app.post("/articles/new", Middlewares.isAuthenticated, async function(req, res) {
+	const article = req.body;
+	console.log(`Receiving new article: ${article}`);
+	await articles.create(article, new Date(), req.session.token.id);
 });
 
 // app.get("/contact", function(req, res) {

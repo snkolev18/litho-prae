@@ -1,5 +1,6 @@
 const { config } = require("../utils/db_config");
 const sql = require("mssql/msnodesqlv8");
+const { NVarChar, DateTime2, TinyInt, Int } = require("mssql/msnodesqlv8");
 
 class ArticleRepository {
 	constructor() {
@@ -42,8 +43,20 @@ class ArticleRepository {
 	}
 
 	// TO DO
-	async create(article) {
+	async create(article, time, authorId) {
 		// exec SP (article.name, arg)
+		try {
+			const result = await this.db.request()
+				.input("Title", NVarChar, article.title)
+				.input("Content", NVarChar, article.content)
+				.input("AuthorId", NVarChar, authorId)
+				.input("CreatedAt", DateTime2, time)
+				.execute("CreateNewArticle");
+			console.log(result);
+		}
+		catch(err) {
+			console.log(err);
+		}
 	}
 
 	// TO DO: Implement SQL View to get a particular article

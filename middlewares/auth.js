@@ -12,7 +12,7 @@ function isAuthenticated(req, res, next) {
 
 function isAdmin(req, res, next) {
 	if(req.session.token) {
-		if(req.session.token.username === "rootcheto") {
+		if(req.session.token.roleId === 2) {
 			next();
 		}
 		else{

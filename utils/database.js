@@ -52,8 +52,14 @@ class Database {
 				.input("Username", NVarChar, username)
 				.input("Password", NVarChar, password)
 				.output("IsVerified", Int)
+				.output("RoleId", TinyInt)
+				.output("Status", TinyInt)
 				.execute("VerifyLogin")
-			return result.output.IsVerified
+			return {
+				idVerified: result.output.IsVerified,
+				roleId: result.output.RoleId,
+				status: result.output.Status
+			}
 		} catch(e) {
 			console.log("EXCEPTION THROWN!!!");
 			console.log(e);
