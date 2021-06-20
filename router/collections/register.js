@@ -13,7 +13,8 @@ const inputValidation = require("../../utils/validation");
 router.get("/", function(req, res) {
 	log.info("Invoking register");
 	const errors = req.session.errors;
-	res.render("test_register.ejs", { errors });
+	// res.render("test_register.ejs", { errors });
+	res.render("registration.ejs", { errors });
 });
 
 router.post("/", async function(req, res) {
@@ -27,7 +28,7 @@ router.post("/", async function(req, res) {
 	}
 	else {
 		req.session.errors = [];
-		const sc = await db.registerUserSP(usrData.fname, usrData.lname, usrData.usr, usrData.email, usrData.psw, 0);
+		const sc = await db.registerUserSP(usrData.fname, usrData.lname, usrData.username, usrData.email, usrData.password, 0);
 		if (sc) req.session.errors.push({ message : "Account with this username or email already exist!" });
 	}
 	res.redirect("/register");
@@ -38,5 +39,5 @@ module.exports = router;
 (async () => {
 	const s = await DbEx.getInstance();
 	db = new UserRepository();
-	console.log("Connected")
+	console.log("Connected");
 })();

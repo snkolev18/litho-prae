@@ -18,7 +18,9 @@ const PORT 			= process.env.PORT || 1337;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true }));
 app.disable("x-powered-by");
-app.use(helmet());
+// app.use(helmet());
+app.use("/styles", express.static("views/styles"));
+app.use("/js", express.static("views/js"));
 
 // Configuring express to look for .ejs file in ./public directory
 app.set("views", "./views");
@@ -38,8 +40,9 @@ app.use(session({
 require("./router/router")(app);
 
 app.get("/", async function(req, res) {
-	const results = await db.testQuery();
-	res.json(results);
+	// const results = await db.testQuery();
+	// res.json(results);
+	res.render("index.ejs");
 });
 
 app.get("/register", function(req, res) {
@@ -152,7 +155,7 @@ app.post("/articles/new", Middlewares.isAuthenticated, async function(req, res) 
 });
 
 app.get("*", function(_, res) {
-	res.status(404).send("<h1 align=\"center\">Page not found</h1>");
+	res.status(404).render("404-page.ejs");
 });
 
 app.use(async (req, res, next) => {

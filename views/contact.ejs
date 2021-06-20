@@ -20,15 +20,15 @@
     <div class="form">
         <h1>Contact us</h1>
         <p>Please let us know your query</p>
-        <form>
+        <form action="/contact" method="POST">
             <label for="fname">Name:</label>
-            <input type="text" id="fname" class="form-control" onblur="onFocusOut('fname')" onkeyup="onKeyUp('fname')">
+            <input type="text" name="fname" id="fname" class="form-control" onblur="onFocusOut('fname')" onkeyup="onKeyUp('fname')">
             <p id="messageFirstName" class="message">
                 <small>The name field is required.</small>
             </p>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" class="form-control" onblur="onFocusOut('email')" onkeyup="onKeyUp('email')">
+            <input type="email" name= "email" id="email" class="form-control" onblur="onFocusOut('email')" onkeyup="onKeyUp('email')">
             <p id="messageEmail" class="message">
                 <small>The email field is required.</small>
             </p>
@@ -37,7 +37,7 @@
             </p>
 
             <label for="subject">Subject:</label>
-            <input type="text" id="subject" class="form-control" onblur="onFocusOut('subject')" onkeyup="onKeyUp('subject')">
+            <input type="text" name="subject" id="subject" class="form-control" onblur="onFocusOut('subject')" onkeyup="onKeyUp('subject')">
             <p id="messageSubject" class="message">
                 <small>The subject field is required.</small>
             </p>

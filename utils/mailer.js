@@ -19,10 +19,10 @@ class Mailer {
 		this.#mailBody = {
 			from: sender.email,
 			to: process.env.gmailEmail,
-			subject: sender.topic,
+			subject: sender.subject,
 			html: `
-				<h1> ${sender.fname + " " + sender.lname} sent a message </h1>
-				<p> ${sender.msg} </p>
+				<h1> ${sender.fname} sent a message </h1>
+				<p> ${sender.message} </p>
 			`
 		};
 

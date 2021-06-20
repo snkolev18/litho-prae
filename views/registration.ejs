@@ -52,12 +52,24 @@
         </nav>
     </header>
 
+    <hr>
     <div class="form">
         <h1>Create an account</h1>
         <p>Already have an account? Sign in</p>
-        <form>
+        <%
+            if (errors) {
+                %> <ul> <%
+                for(let error of errors) {
+                %>
+                    <li style="color:red"><%=error.message%></li>
+                <%
+                }
+                %> </ul> <%
+            }
+	    %>
+        <form action="/register" method="POST">
             <label for="fname">First name:</label>
-            <input type="text" id="fname" class="form-control" onblur="onFocusOut('fname')" onkeyup="onKeyUp('fname')">
+            <input type="text" name="fname" id="fname" class="form-control" onblur="onFocusOut('fname')" onkeyup="onKeyUp('fname')">
             <p id="messageFirstName" class="message">
                 <small>The name field is required.</small>
             </p>
@@ -67,7 +79,7 @@
                 <small>The name field is required.</small>
             </p>
             <label for="email">Email:</label>
-            <input type="email" id="email" class="form-control" onblur="onFocusOut('email')" onkeyup="onKeyUp('email')">
+            <input type="email" name="email" id="email" class="form-control" onblur="onFocusOut('email')" onkeyup="onKeyUp('email')">
             <p id="messageEmail" class="message">
                 <small>The email field is required.</small>
             </p>
@@ -75,9 +87,18 @@
                 <small>Please enter an valid email.</small>
             </p>
 
+			<label for="username">Username:</label>
+            <input type="text" name="username" id="username" class="form-control" onblur="onFocusOut('username')" onkeyup="onKeyUp('username')">
+            <p id="messageUsername" class="message">
+                <small>The username field is required.</small>
+            </p>
+            <p id="messageValidateRegexUsername" class="message">
+                <small>Please enter an valid username.</small>
+            </p>
+
 
             <label for="password">Enter password:</label>
-            <input type="password" id="password" class="form-control" onblur="onFocusOut('password')" onkeyup="onKeyUp('password')">
+            <input type="password" name="password" id="password" class="form-control" onblur="onFocusOut('password')" onkeyup="onKeyUp('password')">
             <p id="messagePassword" class="message">
                 <small>The password field is required.</small>
             </p>

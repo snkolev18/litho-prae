@@ -7,7 +7,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", function(req, res) {
-	res.render("test_contact.ejs");
+	res.render("contact.ejs");
 });
 
 
@@ -15,6 +15,7 @@ router.post("/", function(req, res) {
 	const mailBody = req.body;
 	console.log(mailBody);
 	mailer.send(mailBody);
+	res.redirect("/contact");
 });
 
 module.exports = router;
