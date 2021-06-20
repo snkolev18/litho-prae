@@ -21,7 +21,7 @@ app.disable("x-powered-by");
 app.use(helmet());
 
 // Configuring express to look for .ejs file in ./public directory
-app.set("views", "./public");
+app.set("views", "./views");
 
 app.use(session({
 	secret: "keyboard cat",
