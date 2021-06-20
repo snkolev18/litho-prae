@@ -10,8 +10,8 @@ const { UserRepository } = require("./repositories/UserRepository");
 const inputValidation = require("./utils/validation");
 const Middlewares = require("./middlewares/auth");
 const helmet 		= require("helmet");
-const db 			= new UserRepository();
-const articles = new ArticleRepository();
+let db 			= undefined;
+let articles = undefined;
 const PORT 			= process.env.PORT || 1337;
 
 // Middlewares
@@ -129,7 +129,7 @@ app.get("/taenpanel/allArticles/edit/:id", Middlewares.isAdmin, async function(r
 	}
 });
 
-app.get("/article/:id", async function(req, res) {
+app.get("/articles/:id", async function(req, res) {
 	if(isNaN(req.params.id)) {
 		res.send({ message: "Invalid article" });
 	}
@@ -163,8 +163,11 @@ app.use(async (req, res, next) => {
 app.listen(PORT, async () => {
 	// console.log(results);
 	console.log("Connecting to DB...");
-	await db.connectToDB();
+	// await db.connectToDB();
 	console.log("Raboti");
 	const s = await DbEx.getInstance();
+	const s2 = await DbEx.getInstance();
+	db = new UserRepository();
+	articles = new ArticleRepository();
 });
 

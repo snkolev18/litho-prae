@@ -42,6 +42,7 @@ class UserRepository {
 				.execute("RegisterAUser");
 				console.log(result);
 		} catch(e) {
+			console.log(e);
 			return 69;
 		}
 	}
