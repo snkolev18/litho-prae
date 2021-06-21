@@ -86,6 +86,7 @@ function passwordConfirmation() {
 	}
 }
 
+/* exported onKeyUp */
 function onKeyUp(id) {
 	switch (id) {
 	case "fname":
@@ -112,6 +113,7 @@ function onKeyUp(id) {
 	}
 }
 
+/* exported onFocusOut */
 function onFocusOut(id) {
 	switch (id) {
 	case "fname":
