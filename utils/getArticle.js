@@ -47,7 +47,7 @@ const articles = [
 	}
 ];
 
-let rObj = {
+const rObj = {
 	articlesList: articles
 };
 
@@ -56,4 +56,4 @@ let rObj = {
 
 [...rObj.articlesList].map(article => {
 	console.log(article.Title);
-})
+});
