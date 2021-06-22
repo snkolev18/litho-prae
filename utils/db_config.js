@@ -1,6 +1,8 @@
+require("dotenv").config();
+
 const config = {
-	database: "litho-prae-db",
-	server: ".\\SQLExpress",
+	database: process.env.DATABASE,
+	server: process.env.DATABASE_INSTANCE,
 	pool: {
 		max: 10,
 		min: 0,

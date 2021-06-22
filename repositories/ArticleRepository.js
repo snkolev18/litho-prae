@@ -62,7 +62,17 @@ class ArticleRepository {
 	}
 
 	async update(article) {
-
+		try {
+			const result = await this.#db.request()
+				.input("Id", Int, article.id)
+				.input("Title", NVarChar, article.title)
+				.input("Content", NVarChar, article.content)
+				.execute("UpdateArticle");
+			console.log(result);
+		}
+		catch(err) {
+			console.log(err);
+		}
 	}
 
 	#db

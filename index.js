@@ -113,7 +113,7 @@ app.get("/taenpanel", Middlewares.isAdmin, async function(req, res) {
 	res.send("Opa shefe");
 });
 
-app.get("/taenpanel/allArticles", Middlewares.isAdmin, async function(req, res) {
+app.get("/taenpanel/articles", Middlewares.isAdmin, async function(req, res) {
 	const _articles_ = await articles.getAll();
 	console.log(_articles_);
 	res.render("test_adminArticles.ejs", {
@@ -121,15 +121,28 @@ app.get("/taenpanel/allArticles", Middlewares.isAdmin, async function(req, res) 
 	});
 });
 
-app.get("/taenpanel/allArticles/edit/:id", Middlewares.isAdmin, async function(req, res) {
+app.get("/taenpanel/articles/edit/:id", Middlewares.isAdmin, async function(req, res) {
 	if(isNaN(req.params.id)) {
 		res.send({ message: "Invalid article" });
 	}
 	else {
 		const id = parseInt(req.params.id);
-		const article = await articles.getArticleById(id);
-
+		const articleForEdit = await articles.getArticleById(id); // -> tova otiva za render
+		res.render("test_editArticle.ejs", {
+			article: articleForEdit,
+			id: id
+		});
 	}
+});
+
+app.post("/taenpanel/articles/edit", Middlewares.isAdmin, async function(req, res) {
+	const article = req.body;
+	console.log(`Trying to edit article: ${article}`);
+
+	const result = await articles.update(article);
+	console.log(result);
+
+	res.redirect("/taenpanel/articles");
 });
 
 app.get("/articles/:id", async function(req, res) {
@@ -154,6 +167,46 @@ app.post("/articles/new", Middlewares.isAuthenticated, async function(req, res) 
 	await articles.create(article, new Date(), req.session.token.id);
 });
 
+app.get("/articles/edit/:id", Middlewares.isAuthenticated, async function(req, res) {
+	if(isNaN(req.params.id)) {
+		res.send({ message: "Invalid article" });
+	}
+	else {
+		const id = parseInt(req.params.id);
+		const articleForEdit = await articles.getArticleById(id);
+		if (req.session.token.id != articleForEdit.AuthorId) {
+			res.redirect("/");
+		}
+		else{
+			req.session.token.articleAuthorId = articleForEdit.AuthorId;
+			req.session.token.articleId = articleForEdit.Id;
+			res.render("test_editArticleUser.ejs", {
+				article: articleForEdit
+				// id: id
+			});
+		}
+	}
+});
+
+app.post("/articles/edit", Middlewares.isAuthenticated, async function(req, res) {
+	console.log(`${req.session.token.id} --- ${req.session.token.articleAuthorId}`);
+	if (req.session.token.id == req.session.token.articleAuthorId) {
+		const article = req.body;
+		article.id = req.session.token.articleId;
+		console.log(req.body);
+		const result = await articles.update(article);
+		console.log(result);
+
+		delete req.session.token.articleAuthorId;
+		delete req.session.token.articleId;
+		res.send("Bombata");
+	}
+	else {
+		res.send("Ne mojesh da editnesh tozi article");
+	}
+});
+
+
 app.get("*", function(_, res) {
 	res.status(404).render("404-page.ejs");
 });
@@ -169,7 +222,7 @@ app.listen(PORT, async () => {
 	// await db.connectToDB();
 	console.log("Raboti");
 	const s = await DbEx.getInstance();
-	const s2 = await DbEx.getInstance();
+	// const s2 = await DbEx.getInstance();
 	db = new UserRepository();
 	articles = new ArticleRepository();
 });
