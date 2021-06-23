@@ -30,7 +30,7 @@ app.use(helmet.contentSecurityPolicy(
 			objectSrc: ["'none'"],
 			upgradeInsecureRequests: [],
 			imgSrc: ["'self'", "https://i.imgur.com/", "https://media.giphy.com/media/Y4K9JjSigTV1FkgiNE/giphy.gif"],
-			fontSrc: ["'self'", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/", "https://cdn.jsdelivr.net/"],
+			fontSrc: ["'self'", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/", "https://cdn.jsdelivr.net/", "https://unpkg.com/", "data:"],
 			childSrc: ["'none'"],
 			styleSrc: ["'self'", "https://cdn.jsdelivr.net/", "https://i.imgur.com/", "https://unpkg.com/", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/"]
 		}
@@ -169,16 +169,38 @@ app.post("/taenpanel/articles/edit", Middlewares.isAdmin, async function(req, re
 	res.redirect("/taenpanel/articles");
 });
 
-app.get("/articles/view/:id", async function(req, res) {
+// /articles/:id/comments/:commentId
+
+app.get("/articles/view/:id", Middlewares.isAuthenticated, async function(req, res) {
 	if(isNaN(req.params.id)) {
 		res.send({ message: "Invalid article" });
 	}
 	else {
 		const id = parseInt(req.params.id);
 		const article = await articles.getArticleById(id);
-		console.log(article);
-		res.send(article);
+		if(!article) {
+			res.status(404).send({ message: "Article not found" });
+		}
+		else {
+			req.session.token.commenttingOnId = article.Id;
+			const comments = await articles.getCommentsForArticle(article.Id);
+			res.render("test_viewArticle.ejs", {
+				article: article,
+				comments: comments,
+				id: id
+			});
+		}
 	}
+});
+
+app.post("/articles/view/comment", Middlewares.isAuthenticated, async function(req, res) {
+	const comment = req.body;
+
+	// TO DO: ako ne sushtestvuva article s takova id => status 404
+	const result = await articles.commentOnArticle(comment.comment, comment.articleId, req.session.token.id);
+	console.log(result);
+	res.redirect(`/articles/view/${comment.articleId}`);
+	delete req.session.token.commenttingOnId;
 });
 
 app.get("/articles/new", Middlewares.isAuthenticated, async function(req, res) {
@@ -208,26 +230,24 @@ app.get("/articles/edit/:id", Middlewares.isAuthenticated, async function(req, r
 		}
 		else{
 			req.session.token.articleAuthorId = articleForEdit.AuthorId;
-			req.session.token.articleId = articleForEdit.Id;
 			res.render("test_editArticleUser.ejs", {
-				article: articleForEdit
-				// id: id
+				article: articleForEdit,
+				articleId: articleForEdit.Id,
+				authorId: articleForEdit.AuthorId
 			});
 		}
 	}
 });
 
 app.post("/articles/edit", Middlewares.isAuthenticated, async function(req, res) {
-	console.log(`${req.session.token.id} --- ${req.session.token.articleAuthorId}`);
-	if (req.session.token.id == req.session.token.articleAuthorId) {
+	console.log(`${req.session.token.id} --- ${req.body.authorId}`);
+	if (req.session.token.id == req.body.authorId) {
 		const article = req.body;
-		article.id = req.session.token.articleId;
 		console.log(req.body);
+
 		const result = await articles.update(article);
 		console.log(result);
 
-		delete req.session.token.articleAuthorId;
-		delete req.session.token.articleId;
 		res.send("Bombata");
 	}
 	else {
@@ -255,4 +275,3 @@ app.listen(PORT, async () => {
 	db = new UserRepository();
 	articles = new ArticleRepository();
 });
-

@@ -11,6 +11,9 @@
 <body>
 	<form action="/articles/edit" method="POST">
     	<hr>
+		<input type="hidden" name="id" value="<%= articleId %>">
+		<input type="hidden" name="authorId" value="<%= authorId %>">
+
     	<label for="title"><b>Edit title</b></label>
     	<input type="text" placeholder="" name="title" id="title"  value="<%= article.Title%>" required>
 

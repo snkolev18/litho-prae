@@ -66,8 +66,29 @@ class ArticleRepository {
 		}
 	}
 
+	async commentOnArticle(comment, articleId, authorId) {
+		try {
+			const result = await this.#db.request()
+				.input("Comment", NVarChar, comment)
+				.input("ArticleId", Int, articleId)
+				.input("AuthorId", Int, authorId)
+				.execute("CommentOnArticle")
+				console.log(result);
+		}
+		catch(err) {
+			console.log(err);
+		}
+	}
+
+	async getCommentsForArticle(articleId) {
+		const comments = await this.#db.request().query`SELECT * FROM vGetCommentsForArticle WHERE ArticleId = ${articleId}`;
+		if (comments) {
+			return comments.recordset;
+		}
+		return "Error";
+	}
+
 	#db
-	// TO DO: Implement SQL View to get a particular article
 }
 
 exports.ArticleRepository = ArticleRepository;
