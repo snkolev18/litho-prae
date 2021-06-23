@@ -29,15 +29,6 @@ class ArticleRepository {
 
 	async getArticleById(id) {
 		const articleOut = await this.#db.request().query`SELECT * FROM vAllArticles WHERE Id = ${id}`;
-		// const articles = await this.getAll();
-		// articles.map(article => {
-		// 	console.log(`Current id: ${article.Id} ${typeof (article.Id)}`);
-		// 	console.log(`Searching for id: ${id} ${typeof (id)}`);
-		// 	if (id === article.Id) {
-		// 		articleOut = article;
-		// 	}
-		// });
-
 		if (articleOut) {
 			return articleOut.recordset[0];
 		}

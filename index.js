@@ -19,6 +19,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true }));
 app.disable("x-powered-by");
 // app.use(helmet());
+app.use(helmet.contentSecurityPolicy(
+	{
+		useDefaults: false,
+		directives: {
+
+			/* ["'self'"]*/
+			defaultSrc: helmet.contentSecurityPolicy.dangerouslyDisableDefaultSrc,
+			scriptSrc: ["'self'", "https://unpkg.com/", "'unsafe-inline'"],
+			objectSrc: ["'none'"],
+			upgradeInsecureRequests: [],
+			imgSrc: ["'self'", "https://i.imgur.com/", "https://media.giphy.com/media/Y4K9JjSigTV1FkgiNE/giphy.gif"],
+			fontSrc: ["'self'", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/", "https://cdn.jsdelivr.net/"],
+			childSrc: ["'none'"],
+			styleSrc: ["'self'", "https://cdn.jsdelivr.net/", "https://i.imgur.com/", "https://unpkg.com/", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/"]
+		}
+	}
+), helmet.crossOriginResourcePolicy());
+
+
 app.use("/styles", express.static("views/styles"));
 app.use("/js", express.static("views/js"));
 
@@ -128,10 +147,15 @@ app.get("/taenpanel/articles/edit/:id", Middlewares.isAdmin, async function(req,
 	else {
 		const id = parseInt(req.params.id);
 		const articleForEdit = await articles.getArticleById(id); // -> tova otiva za render
-		res.render("test_editArticle.ejs", {
-			article: articleForEdit,
-			id: id
-		});
+		if(!articleForEdit) {
+			res.status(404).send({ message: "Article not found" });
+		}
+		else{
+			res.render("test_editArticle.ejs", {
+				article: articleForEdit,
+				id: id
+			});
+		}
 	}
 });
 
@@ -145,7 +169,7 @@ app.post("/taenpanel/articles/edit", Middlewares.isAdmin, async function(req, re
 	res.redirect("/taenpanel/articles");
 });
 
-app.get("/articles/:id", async function(req, res) {
+app.get("/articles/view/:id", async function(req, res) {
 	if(isNaN(req.params.id)) {
 		res.send({ message: "Invalid article" });
 	}
@@ -174,6 +198,11 @@ app.get("/articles/edit/:id", Middlewares.isAuthenticated, async function(req, r
 	else {
 		const id = parseInt(req.params.id);
 		const articleForEdit = await articles.getArticleById(id);
+		if(!articleForEdit) {
+			res.status(404).send({ message: "Article not found" });
+			res.end();
+			return;
+		}
 		if (req.session.token.id != articleForEdit.AuthorId) {
 			res.redirect("/");
 		}
