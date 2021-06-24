@@ -142,13 +142,13 @@ app.get("/taenpanel/articles", Middlewares.isAdmin, async function(req, res) {
 
 app.get("/taenpanel/articles/edit/:id", Middlewares.isAdmin, async function(req, res) {
 	if(isNaN(req.params.id)) {
-		res.send({ message: "Invalid article" });
+		res.render("404-page.ejs", { title: "Invalid article" });
 	}
 	else {
 		const id = parseInt(req.params.id);
-		const articleForEdit = await articles.getArticleById(id); // -> tova otiva za render
+		const articleForEdit = await articles.getArticleById(id);
 		if(!articleForEdit) {
-			res.status(404).send({ message: "Article not found" });
+			res.status(404).render("404-page.ejs", { title: "Article not found" });
 		}
 		else{
 			res.render("test_editArticle.ejs", {
@@ -173,13 +173,13 @@ app.post("/taenpanel/articles/edit", Middlewares.isAdmin, async function(req, re
 
 app.get("/articles/view/:id", Middlewares.isAuthenticated, async function(req, res) {
 	if(isNaN(req.params.id)) {
-		res.send({ message: "Invalid article" });
+		res.render("404-page.ejs", { title: "Invalid article" });
 	}
 	else {
 		const id = parseInt(req.params.id);
 		const article = await articles.getArticleById(id);
 		if(!article) {
-			res.status(404).send({ message: "Article not found" });
+			res.status(404).render("404-page.ejs", { title: "Article not found" });
 		}
 		else {
 			req.session.token.commenttingOnId = article.Id;
@@ -196,7 +196,12 @@ app.get("/articles/view/:id", Middlewares.isAuthenticated, async function(req, r
 app.post("/articles/view/comment", Middlewares.isAuthenticated, async function(req, res) {
 	const comment = req.body;
 
-	// TO DO: ako ne sushtestvuva article s takova id => status 404
+	const article = await articles.getArticleById(comment.articleId);
+	if (!article) {
+		res.status(404).render("404-page.ejs", { title: "Article not found" });
+		return;
+	}
+
 	const result = await articles.commentOnArticle(comment.comment, comment.articleId, req.session.token.id);
 	console.log(result);
 	res.redirect(`/articles/view/${comment.articleId}`);
@@ -215,13 +220,13 @@ app.post("/articles/new", Middlewares.isAuthenticated, async function(req, res) 
 
 app.get("/articles/edit/:id", Middlewares.isAuthenticated, async function(req, res) {
 	if(isNaN(req.params.id)) {
-		res.send({ message: "Invalid article" });
+		res.render("404-page.ejs", { title: "Invalid article" });
 	}
 	else {
 		const id = parseInt(req.params.id);
 		const articleForEdit = await articles.getArticleById(id);
 		if(!articleForEdit) {
-			res.status(404).send({ message: "Article not found" });
+			res.status(404).render("404-page.ejs", { title: "Article not found" });
 			res.end();
 			return;
 		}
@@ -257,7 +262,7 @@ app.post("/articles/edit", Middlewares.isAuthenticated, async function(req, res)
 
 
 app.get("*", function(_, res) {
-	res.status(404).render("404-page.ejs");
+	res.status(404).render("404-page.ejs", { title: "Page not found" });
 });
 
 app.use(async (req, res, next) => {
