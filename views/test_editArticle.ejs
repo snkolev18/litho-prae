@@ -20,5 +20,15 @@
     	<label for="content"><b>Edit content</b></label>
     	<input type="text" placeholder="" name="content" id="content"  value="<%= article.Content%>" required>
     <button type="submit" class="registerbtn">Post</button>
+	</form>
+	<br>
+	<br>
+	<br>
+	<h3>Or you can delete this article</h3><br>
+	<form action="/taenpanel/articles/delete" method="POST">
+	<label for="title"><b>ID</b></label>
+    	<input readonly name="id" id="id" value="<%= id%>" required>
+    	<button type="submit" class="registerbtn">DELETE</button>
+	</form>
 </body>
 </html>

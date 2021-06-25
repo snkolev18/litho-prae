@@ -169,6 +169,19 @@ app.post("/taenpanel/articles/edit", Middlewares.isAdmin, async function(req, re
 	res.redirect("/taenpanel/articles");
 });
 
+app.post("/taenpanel/articles/delete", Middlewares.isAdmin, async function(req, res) {
+	const articleForDelete = await articles.getArticleById(req.body.id);
+	console.log(articleForDelete);
+	if(!articleForDelete) {
+		res.status(404).render("404-page.ejs", { title: "Article not found" });
+		return;
+	}
+
+	const result = await articles.delete(req.body.id);
+	console.log(`Result of article deletion: ${result}`);
+	res.redirect("/taenpanel/articles");
+});
+
 // /articles/:id/comments/:commentId
 
 app.get("/articles/view/:id", Middlewares.isAuthenticated, async function(req, res) {

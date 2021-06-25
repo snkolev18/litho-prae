@@ -66,6 +66,17 @@ class ArticleRepository {
 		}
 	}
 
+	async delete(id) {
+		try {
+			const result = await this.#db.request()
+				.input("Id", Int, id)
+				.execute("DeleteArticle")
+				console.log(result);
+		} catch(err) {
+			console.log(err);
+		}
+	}
+
 	async commentOnArticle(comment, articleId, authorId) {
 		try {
 			const result = await this.#db.request()
