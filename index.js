@@ -38,6 +38,7 @@ app.use(helmet.contentSecurityPolicy(
 
 app.use("/styles", express.static("views/styles"));
 app.use("/js", express.static("views/js"));
+app.use("/img", express.static("views/img"));
 
 // Configuring express to look for .ejs file in ./public directory
 app.set("views", "./views");
@@ -58,13 +59,15 @@ app.use(limiter.configureLimiter(60, 1));
 
 require("./router/router")(app);
 
-app.get("/", async function(req, res) {
+app.get("/", function(req, res) {
 	res.render("index.ejs");
 });
 
-app.get("/articles", Middlewares.isAuthenticated, async function(req, res) {
+app.get("/articles", async function(req, res) {
 	const _articles_ = await articles.getAll();
-	res.json(_articles_);
+	res.render("articles.ejs", {
+		articles: _articles_
+	});
 });
 
 app.get("/login", function(req, res) {
@@ -166,6 +169,23 @@ app.post("/taenpanel/articles/delete", Middlewares.isAdmin, async function(req, 
 
 	const result = await articles.delete(req.body.id);
 	console.log(`Result of article deletion: ${result}`);
+	res.redirect("/taenpanel/articles");
+});
+
+app.post("/taenpanel/articles/approve", Middlewares.isAdmin, async function(req, res) {
+	const id = req.body.id;
+
+	const article = await articles.getArticleById(id);
+	if(!article) {
+		res.status(404).render("error-page.ejs", {
+			title: "Article not found",
+			statusCode: 404,
+			message: "We can't find the article you're looking for."
+		});
+		return;
+	}
+	const result = await articles.approve(id);
+	console.log(`Successfully approved article with id ${id}`);
 	res.redirect("/taenpanel/articles");
 });
 

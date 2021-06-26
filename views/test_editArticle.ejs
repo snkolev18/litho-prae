@@ -26,9 +26,17 @@
 	<br>
 	<h3>Or you can delete this article</h3><br>
 	<form action="/taenpanel/articles/delete" method="POST">
-	<label for="title"><b>ID</b></label>
-    	<input readonly name="id" id="id" value="<%= id%>" required>
+    	<input readonly name="id" id="id" value="<%= id%>" required type="hidden">
     	<button type="submit" class="registerbtn">DELETE</button>
 	</form>
+	<br>
+	<br>
+	<br>
+	<% if (!article.IsApproved) { %>
+	<form action="/taenpanel/articles/approve" method="POST">
+		<input readonly name="id" id="id" value="<%= id%>" required type="hidden">
+    	<button type="submit" class="registerbtn">APPROVEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!</button>
+	</form>
+	<%} %>
 </body>
 </html>

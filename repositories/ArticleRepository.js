@@ -17,7 +17,7 @@ class ArticleRepository {
 			console.log("Connected!!!");
 		}
 		catch(err) {
-			console.log(err);
+			console.error(err);
 		}
 	}
 
@@ -48,7 +48,7 @@ class ArticleRepository {
 			console.log(result);
 		}
 		catch(err) {
-			console.log(err);
+			console.error(err);
 		}
 	}
 
@@ -62,7 +62,7 @@ class ArticleRepository {
 			console.log(result);
 		}
 		catch(err) {
-			console.log(err);
+			console.error(err);
 		}
 	}
 
@@ -71,9 +71,9 @@ class ArticleRepository {
 			const result = await this.#db.request()
 				.input("Id", Int, id)
 				.execute("DeleteArticle");
-				console.log(result);
+			console.log(result);
 		} catch(err) {
-			console.log(err);
+			console.error(err);
 		}
 	}
 
@@ -84,10 +84,10 @@ class ArticleRepository {
 				.input("ArticleId", Int, articleId)
 				.input("AuthorId", Int, authorId)
 				.execute("CommentOnArticle");
-				console.log(result);
+			console.log(result);
 		}
 		catch(err) {
-			console.log(err);
+			console.error(err);
 		}
 	}
 
@@ -104,10 +104,22 @@ class ArticleRepository {
 		const result = await this.#db.request()
 			.input("ArticleId", Int, articleId)
 			.execute("AddViewsForArticle");
-			console.log(result);
+		console.log(result);
 		}
 		catch (err) {
-			console.log(err);
+			console.error(err);
+		}
+	}
+
+	async approve(id) {
+		try {
+		const result = await this.#db.request()
+			.input("Id", Int, id)
+			.execute("ApproveArticle");
+		console.log(result);
+		}
+		catch (err) {
+			console.error(err);
 		}
 	}
 

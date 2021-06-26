@@ -18,22 +18,7 @@
 </head>
 <body>
 	<div class = "container">
-        <h1>A list of all articles that are waiting for an approval</h1>
-    <div class = "row">
-        <% articles.filter(article => !article.IsApproved).map(article => { %>
-        <div class="col-md-4">
-            <div class="card" style="width: 18rem;">
-                <img src="" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Article Title: <%= article.Title %> </h5>
-                    <p class="card-text">Author: <%= article.First_name %></p>
-                    <a href="/taenpanel/articles/edit/<%= article.Id%>" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <% })%>
-    </div>
-	    <h1>A list of all approved articles</h1>
+	    <h1>All articles</h1>
     <div class = "row">
         <% articles.filter(article => article.IsApproved).map(article => { %>
         <div class="col-md-4">
