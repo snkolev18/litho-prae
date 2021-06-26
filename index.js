@@ -18,7 +18,6 @@ const PORT 			= process.env.PORT || 1337;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true }));
 app.disable("x-powered-by");
-// app.use(helmet());
 app.use(helmet.contentSecurityPolicy(
 	{
 		useDefaults: false,
@@ -45,7 +44,7 @@ app.use("/js", express.static("views/js"));
 app.set("views", "./views");
 
 app.use(session({
-	secret: "keyboard cat",
+	secret: process.env.SESSION_SECRET,
 	secure: true,
 	resave: false,
 	saveUninitialized: true,
@@ -59,32 +58,7 @@ app.use(session({
 require("./router/router")(app);
 
 app.get("/", async function(req, res) {
-	// const results = await db.testQuery();
-	// res.json(results);
 	res.render("index.ejs");
-});
-
-app.get("/register", function(req, res) {
-	log.info("Invoking register");
-	const errors = req.session.errors;
-	res.render("test_register.ejs", { errors });
-});
-
-app.post("/registerUser", async function(req, res) {
-
-	const usrData = req.body;
-	log.info(usrData, `Trying to register a user ${usrData.email}`);
-	console.log(usrData);
-	const errors = inputValidation.checkUserRegistrationData(usrData);
-	if (errors.length) {
-		req.session.errors = errors;
-	}
-	else {
-		req.session.errors = [];
-		const sc = await db.registerUserSP(usrData.fname, usrData.lname, usrData.usr, usrData.email, usrData.psw, 0);
-		if (sc) req.session.errors.push({ message : "Account with this username or email already exist!" });
-	}
-	res.redirect("/register");
 });
 
 app.get("/articles", Middlewares.isAuthenticated, async function(req, res) {
@@ -184,94 +158,94 @@ app.post("/taenpanel/articles/delete", Middlewares.isAdmin, async function(req, 
 
 // /articles/:id/comments/:commentId
 
-app.get("/articles/view/:id", Middlewares.isAuthenticated, async function(req, res) {
-	if(isNaN(req.params.id)) {
-		res.render("404-page.ejs", { title: "Invalid article" });
-	}
-	else {
-		const id = parseInt(req.params.id);
-		const article = await articles.getArticleById(id);
-		if(!article) {
-			res.status(404).render("404-page.ejs", { title: "Article not found" });
-		}
-		else {
-			req.session.token.commenttingOnId = article.Id;
-			const comments = await articles.getCommentsForArticle(article.Id);
-			res.render("test_viewArticle.ejs", {
-				article: article,
-				comments: comments,
-				id: id
-			});
-		}
-	}
-});
+// app.get("/articles/view/:id", Middlewares.isAuthenticated, async function(req, res) {
+// 	if(isNaN(req.params.id)) {
+// 		res.render("404-page.ejs", { title: "Invalid article" });
+// 	}
+// 	else {
+// 		const id = parseInt(req.params.id);
+// 		const article = await articles.getArticleById(id);
+// 		if(!article) {
+// 			res.status(404).render("404-page.ejs", { title: "Article not found" });
+// 		}
+// 		else {
+// 			req.session.token.commenttingOnId = article.Id;
+// 			const comments = await articles.getCommentsForArticle(article.Id);
+// 			res.render("test_viewArticle.ejs", {
+// 				article: article,
+// 				comments: comments,
+// 				id: id
+// 			});
+// 		}
+// 	}
+// });
 
-app.post("/articles/view/comment", Middlewares.isAuthenticated, async function(req, res) {
-	const comment = req.body;
+// app.post("/articles/view/comment", Middlewares.isAuthenticated, async function(req, res) {
+// 	const comment = req.body;
 
-	const article = await articles.getArticleById(comment.articleId);
-	if (!article) {
-		res.status(404).render("404-page.ejs", { title: "Article not found" });
-		return;
-	}
+// 	const article = await articles.getArticleById(comment.articleId);
+// 	if (!article) {
+// 		res.status(404).render("404-page.ejs", { title: "Article not found" });
+// 		return;
+// 	}
 
-	const result = await articles.commentOnArticle(comment.comment, comment.articleId, req.session.token.id);
-	console.log(result);
-	res.redirect(`/articles/view/${comment.articleId}`);
-	delete req.session.token.commenttingOnId;
-});
+// 	const result = await articles.commentOnArticle(comment.comment, comment.articleId, req.session.token.id);
+// 	console.log(result);
+// 	res.redirect(`/articles/view/${comment.articleId}`);
+// 	delete req.session.token.commenttingOnId;
+// });
 
-app.get("/articles/new", Middlewares.isAuthenticated, async function(req, res) {
-	res.render("test_createArticle.ejs");
-});
+// app.get("/articles/new", Middlewares.isAuthenticated, async function(req, res) {
+// 	res.render("test_createArticle.ejs");
+// });
 
-app.post("/articles/new", Middlewares.isAuthenticated, async function(req, res) {
-	const article = req.body;
-	console.log(`Receiving new article: ${article}`);
-	await articles.create(article, new Date(), req.session.token.id);
-});
+// app.post("/articles/new", Middlewares.isAuthenticated, async function(req, res) {
+// 	const article = req.body;
+// 	console.log(`Receiving new article: ${article}`);
+// 	await articles.create(article, new Date(), req.session.token.id);
+// });
 
-app.get("/articles/edit/:id", Middlewares.isAuthenticated, async function(req, res) {
-	if(isNaN(req.params.id)) {
-		res.render("404-page.ejs", { title: "Invalid article" });
-	}
-	else {
-		const id = parseInt(req.params.id);
-		const articleForEdit = await articles.getArticleById(id);
-		if(!articleForEdit) {
-			res.status(404).render("404-page.ejs", { title: "Article not found" });
-			res.end();
-			return;
-		}
-		if (req.session.token.id != articleForEdit.AuthorId) {
-			res.redirect("/");
-		}
-		else{
-			req.session.token.articleAuthorId = articleForEdit.AuthorId;
-			res.render("test_editArticleUser.ejs", {
-				article: articleForEdit,
-				articleId: articleForEdit.Id,
-				authorId: articleForEdit.AuthorId
-			});
-		}
-	}
-});
+// app.get("/articles/edit/:id", Middlewares.isAuthenticated, async function(req, res) {
+// 	if(isNaN(req.params.id)) {
+// 		res.render("404-page.ejs", { title: "Invalid article" });
+// 	}
+// 	else {
+// 		const id = parseInt(req.params.id);
+// 		const articleForEdit = await articles.getArticleById(id);
+// 		if(!articleForEdit) {
+// 			res.status(404).render("404-page.ejs", { title: "Article not found" });
+// 			res.end();
+// 			return;
+// 		}
+// 		if (req.session.token.id != articleForEdit.AuthorId) {
+// 			res.redirect("/");
+// 		}
+// 		else{
+// 			req.session.token.articleAuthorId = articleForEdit.AuthorId;
+// 			res.render("test_editArticleUser.ejs", {
+// 				article: articleForEdit,
+// 				articleId: articleForEdit.Id,
+// 				authorId: articleForEdit.AuthorId
+// 			});
+// 		}
+// 	}
+// });
 
-app.post("/articles/edit", Middlewares.isAuthenticated, async function(req, res) {
-	console.log(`${req.session.token.id} --- ${req.body.authorId}`);
-	if (req.session.token.id == req.body.authorId) {
-		const article = req.body;
-		console.log(req.body);
+// app.post("/articles/edit", Middlewares.isAuthenticated, async function(req, res) {
+// 	console.log(`${req.session.token.id} --- ${req.body.authorId}`);
+// 	if (req.session.token.id == req.body.authorId) {
+// 		const article = req.body;
+// 		console.log(req.body);
 
-		const result = await articles.update(article);
-		console.log(result);
+// 		const result = await articles.update(article);
+// 		console.log(result);
 
-		res.send("Bombata");
-	}
-	else {
-		res.send("Ne mojesh da editnesh tozi article");
-	}
-});
+// 		res.send("Bombata");
+// 	}
+// 	else {
+// 		res.send("Ne mojesh da editnesh tozi article");
+// 	}
+// });
 
 
 app.get("*", function(_, res) {
