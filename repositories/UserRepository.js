@@ -1,7 +1,7 @@
 const { NVarChar, VarBinary, TinyInt, SmallInt, Int } = require("mssql/msnodesqlv8");
 const sql = require("mssql/msnodesqlv8");
 const { DbEx } = require("../utils/dbEx");
-const { config } = require("../utils/db_config");
+const { config } = require("../config/db_config");
 
 class UserRepository {
 	constructor() {

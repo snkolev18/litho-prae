@@ -1,4 +1,4 @@
-const { config } = require("./db_config");
+const { config } = require("../config/db_config");
 const sql = require("mssql/msnodesqlv8");
 
 let dbInstance = null;

@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!--Title of the page-->
-        <title><%= title %></title>
+        <title><%=title%></title>
 		<!--Import icon-->
 		<link rel="icon" type="image/x-icon" href="https://i.imgur.com/FJvzFPT.png">
 		<!--Import stylesheet-->
@@ -17,9 +17,9 @@
     <body>
 		<!--Import the main content-->
 		<div class="container">
-			<h2>Oops! Page not found.</h2>
-			<h1>404</h1>
-			<p>We can't find the page you're looking for.</p>
+			<h2><%=title%></h2>
+			<h1><%=statusCode%></h1>
+			<p><%=message%></p>
 			<a href="/">Go back home</a>
 		</div>
     </body>

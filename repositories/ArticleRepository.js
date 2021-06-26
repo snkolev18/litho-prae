@@ -1,4 +1,4 @@
-const { config } = require("../utils/db_config");
+const { config } = require("../config/db_config");
 const sql = require("mssql/msnodesqlv8");
 const { NVarChar, DateTime2, TinyInt, Int } = require("mssql/msnodesqlv8");
 const { DbEx } = require("../utils/dbEx");
@@ -70,7 +70,7 @@ class ArticleRepository {
 		try {
 			const result = await this.#db.request()
 				.input("Id", Int, id)
-				.execute("DeleteArticle")
+				.execute("DeleteArticle");
 				console.log(result);
 		} catch(err) {
 			console.log(err);
@@ -83,7 +83,7 @@ class ArticleRepository {
 				.input("Comment", NVarChar, comment)
 				.input("ArticleId", Int, articleId)
 				.input("AuthorId", Int, authorId)
-				.execute("CommentOnArticle")
+				.execute("CommentOnArticle");
 				console.log(result);
 		}
 		catch(err) {
@@ -97,6 +97,18 @@ class ArticleRepository {
 			return comments.recordset;
 		}
 		return "Error";
+	}
+
+	async updateViewsForArticle(articleId) {
+		try {
+		const result = await this.#db.request()
+			.input("ArticleId", Int, articleId)
+			.execute("AddViewsForArticle");
+			console.log(result);
+		}
+		catch (err) {
+			console.log(err);
+		}
 	}
 
 	#db

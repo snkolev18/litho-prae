@@ -3,21 +3,31 @@ const router = express.Router();
 const Middlewares = require("../../middlewares/auth");
 const { ArticleRepository } = require("../../repositories/ArticleRepository");
 const { DbEx } = require("../../utils/dbEx");
+const limiter = require("../../config/limiter_config");
 let articles = undefined;
 
-router.get("/view/:id", Middlewares.isAuthenticated, async function(req, res) {
+router.get("/view/:id", Middlewares.isAuthenticated, limiter.configureLimiter(5, 0.5), async function(req, res) {
 	if(isNaN(req.params.id)) {
-		res.render("404-page.ejs", { title: "Invalid article" });
+		res.status(400).render("error-page.ejs", {
+			title: "Invalid article",
+			statusCode: 400,
+			message: "Invalid article ID."
+		});
 	}
 	else {
 		const id = parseInt(req.params.id);
 		const article = await articles.getArticleById(id);
 		if(!article) {
-			res.status(404).render("404-page.ejs", { title: "Article not found" });
+			res.status(404).render("error-page.ejs", {
+				title: "Article not found",
+				statusCode: 404,
+				message: "We can't find the article you're looking for."
+			});
 		}
 		else {
 			req.session.token.commenttingOnId = article.Id;
 			const comments = await articles.getCommentsForArticle(article.Id);
+			await articles.updateViewsForArticle(article.Id);
 			res.render("test_viewArticle.ejs", {
 				article: article,
 				comments: comments,
@@ -27,12 +37,16 @@ router.get("/view/:id", Middlewares.isAuthenticated, async function(req, res) {
 	}
 });
 
-router.post("/view/comment", Middlewares.isAuthenticated, async function(req, res) {
+router.post("/view/comment", Middlewares.isAuthenticated, limiter.configureLimiter(5, 5), async function(req, res) {
 	const comment = req.body;
 
 	const article = await articles.getArticleById(comment.articleId);
 	if (!article) {
-		res.status(404).render("404-page.ejs", { title: "Article not found" });
+		res.status(404).render("error-page.ejs", {
+			title: "Article not found",
+			statusCode: 404,
+			message: "We can't find the article you're looking for."
+		});
 		return;
 	}
 
@@ -46,7 +60,7 @@ router.get("/new", Middlewares.isAuthenticated, async function(req, res) {
 	res.render("test_createArticle.ejs");
 });
 
-router.post("/new", Middlewares.isAuthenticated, async function(req, res) {
+router.post("/new", Middlewares.isAuthenticated, limiter.configureLimiter(10, 5), async function(req, res) {
 	const article = req.body;
 	console.log(`Receiving new article: ${article}`);
 	await articles.create(article, new Date(), req.session.token.id);
@@ -54,13 +68,21 @@ router.post("/new", Middlewares.isAuthenticated, async function(req, res) {
 
 router.get("/edit/:id", Middlewares.isAuthenticated, async function(req, res) {
 	if(isNaN(req.params.id)) {
-		res.render("404-page.ejs", { title: "Invalid article" });
+		res.status(400).render("error-page.ejs", {
+			title: "Invalid article",
+			statusCode: 400,
+			message: "Invalid article ID."
+		});
 	}
 	else {
 		const id = parseInt(req.params.id);
 		const articleForEdit = await articles.getArticleById(id);
 		if(!articleForEdit) {
-			res.status(404).render("404-page.ejs", { title: "Article not found" });
+			res.status(404).render("error-page.ejs", {
+				title: "Article not found",
+				statusCode: 404,
+				message: "We can't find the article you're looking for."
+			});
 			res.end();
 			return;
 		}
@@ -78,7 +100,7 @@ router.get("/edit/:id", Middlewares.isAuthenticated, async function(req, res) {
 	}
 });
 
-router.post("/articles/edit", Middlewares.isAuthenticated, async function(req, res) {
+router.post("/articles/edit", Middlewares.isAuthenticated, limiter.configureLimiter(3, 9), async function(req, res) {
 	console.log(`${req.session.token.id} --- ${req.body.authorId}`);
 	if (req.session.token.id == req.body.authorId) {
 		const article = req.body;
