@@ -45,12 +45,6 @@ html, body {
     padding: 70px 30px;
 }
 
-p {
-    line-height: 5;
-}
-
-
-
 @media(max-width: 768px) {
     .main-nav {
         justify-content: space-between;
