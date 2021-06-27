@@ -27,7 +27,7 @@ function validateLastName(id) {
 function validateEmail(id) {
 	const emailValue = document.getElementById(id).value;
 
-	const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+	const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
 
 	if (emailValue.length > 0) {
 		document.getElementById("messageEmail").style.display = "none";
