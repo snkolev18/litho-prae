@@ -62,7 +62,20 @@ body {
     background-color: #0c4ea0;
 }
 
+.form .deletebtn {
+    float: left;
+}
+
 .message {
     display: none;
     color: red;
+}
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-top: 10px;
+    width: 100%;
+    border: 1px solid black;
 }
