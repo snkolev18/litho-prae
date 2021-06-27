@@ -33,7 +33,7 @@ router.get("/view/:id", limiter.configureLimiter(5, 0.5), async function(req, re
 			article.Content = renderContentToHTML(article.Content);
 
 			if(req.session.token) {
-				res.render("article.ejs", {
+				res.render("test_viewArticle.ejs", {
 					article: article,
 					comments: comments,
 					id: id,
@@ -41,7 +41,7 @@ router.get("/view/:id", limiter.configureLimiter(5, 0.5), async function(req, re
 				});
 			}
 			else {
-				res.render("article.ejs", {
+				res.render("test_viewArticle.ejs", {
 					article: article,
 					comments: comments,
 					id: id,
@@ -95,6 +95,7 @@ router.get("/edit/:id", Middlewares.isAuthenticated, async function(req, res) {
 	else {
 		const id = parseInt(req.params.id);
 		const articleForEdit = await articles.getArticleById(id);
+		const tags = await articles.getAllTags();
 		if(!articleForEdit) {
 			res.status(404).render("error-page.ejs", {
 				title: "Article not found",
@@ -118,22 +119,33 @@ router.get("/edit/:id", Middlewares.isAuthenticated, async function(req, res) {
 			res.render("test_editArticleUser.ejs", {
 				article: articleForEdit,
 				articleId: articleForEdit.Id,
-				authorId: articleForEdit.AuthorId
+				authorId: articleForEdit.AuthorId,
+				tags: tags
 			});
 		}
 	}
 });
 
-router.post("/articles/edit", Middlewares.isAuthenticated, limiter.configureLimiter(3, 9), async function(req, res) {
+router.post("/edit", Middlewares.isAuthenticated, limiter.configureLimiter(3, 9), async function(req, res) {
 	console.log(`${req.session.token.id} --- ${req.body.authorId}`);
 	if (req.session.token.id == req.body.authorId) {
 		const article = req.body;
 		console.log(req.body);
 
 		const result = await articles.update(article);
+		const result2 = await articles.assignTagToArticle(article.id, article.tag);
+		if (result2 == 1337) {
+			res.status(400).render("error-page.ejs", {
+				title: "Bad request",
+				statusCode: 400,
+				message: "Cannot apply already existing tag to this article"
+			});
+			res.end();
+			return;
+		}
 		console.log(result);
 
-		res.send("Bombata");
+		res.redirect(`/articles/edit/${article.id}`);
 	}
 	else {
 		res.send("Ne mojesh da editnesh tozi article");

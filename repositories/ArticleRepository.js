@@ -132,6 +132,7 @@ class ArticleRepository {
 		}
 		catch (err) {
 			console.log(err);
+			return 1337;
 		}
 	}
 

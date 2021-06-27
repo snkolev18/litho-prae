@@ -19,6 +19,12 @@
 
     	<label for="content"><b>Edit content</b></label>
     	<input type="text" placeholder="" name="content" id="content"  value="<%= article.Content%>" required>
+
+		<select name="tag">
+			<% tags.map(tag => { %>
+			<option value="<%=tag.Id%>"><%=tag.Name%></option>
+			<% }) %>
+		</select>
     <button type="submit" class="registerbtn">Post</button>
 </body>
 </html>

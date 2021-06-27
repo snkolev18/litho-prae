@@ -5,34 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
             crossorigin="anonymous">
     <title>Document</title>
+
+	<link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/article.css">
+	<link rel="stylesheet" href="/styles/navbar.css">
 </head>
 <body>
-	<div class = "container">
-    	<div class = "row">
-        	<div class="col-md-4">
-            	<div class="card" style="width: 18rem;">
-                	<img src="#" class="card-img-top" alt="#">
-                	<div class="card-body">
-                    	<h5 class="card-title">Article Title: <%= article.Title %> </h5>
-                    	<p class="card-text">Author: <%= article.First_name %></p>
-                    	<a href="/articles/edit/<%= article.Id%>" class="btn btn-primary">Go somewhere</a>
-                	</div>
-            	</div>
-        	</div>
-			<% comments.map((comment) => { %>
+	<%- include ("partials/header.ejs", {logged: logged}) %>
+	<div class="content">
+        <img src="https://i.imgur.com/P3amfbP.jpg" alt="img">
+        <h1><%= article.Title %></h1>
+
+        <%- article.Content %>
+		<br>
+		<% comments.map((comment) => { %>
 				<p><%= comment.Content %></p><br>
 			<% }) %>
-    	</div>
+		<hr>
 		<form action="/articles/view/comment" method="POST">
-    		<hr>
-			<input type="hidden" name="articleId" value="<%= id %>">
-    		<label for="content"><b>Place a comment under this article</b></label><br>
-    		<textarea id="comment_area" name="comment" rows="6" cols="25">
+			<input type="hidden" name="articleId" value="<%=id%>">
+    		<textarea rows="3" cols="50" placeholder="Add a comment..."></textarea>
 			</textarea>
-    	<button type="submit" class="registerbtn">Comment</button>
-	</div>
+    		<button type="submit">Comment</button>
+		</form>
+    </div>
 </body>
