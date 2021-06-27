@@ -12,11 +12,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="styles/reset.css">
-    <link rel="stylesheet" type="text/css" href="styles/contact.css">
+    <link rel="stylesheet" type="text/css" href="/styles/reset.css">
+    <link rel="stylesheet" type="text/css" href="/styles/contact.css">
+    <link rel="stylesheet" type="text/css" href="/styles/navbar.css">
 </head>
 
 <body>
+    <%- include ("partials/header.ejs", {logged: logged}) %>
     <div class="form">
         <h1>Contact us</h1>
         <p>Please let us know your query</p>

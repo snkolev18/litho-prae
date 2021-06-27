@@ -27,7 +27,7 @@ app.use(helmet.contentSecurityPolicy(
 			scriptSrc: ["'self'", "https://unpkg.com/", "'unsafe-inline'"],
 			objectSrc: ["'none'"],
 			upgradeInsecureRequests: [],
-			imgSrc: ["'self'", "https://i.imgur.com/", "https://media.giphy.com/media/Y4K9JjSigTV1FkgiNE/giphy.gif"],
+			imgSrc: ["'self'", "https://i.imgur.com/", "https://media.giphy.com/media/Y4K9JjSigTV1FkgiNE/giphy.gif", "data:"],
 			fontSrc: ["'self'", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/", "https://cdn.jsdelivr.net/", "https://unpkg.com/", "data:"],
 			childSrc: ["'none'"],
 			styleSrc: ["'self'", "https://cdn.jsdelivr.net/", "https://i.imgur.com/", "https://unpkg.com/", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/"]
@@ -60,33 +60,49 @@ app.use(limiter.configureLimiter(60, 1));
 require("./router/router")(app);
 
 app.get("/", function(req, res) {
-	res.render("index.ejs");
+	if(req.session.token) {
+		res.render("index.ejs", { logged: true });
+	}
+	else {
+		res.render("index.ejs", { logged: false });
+	}
 });
 
 app.get("/articles", async function(req, res) {
 	const _articles_ = await articles.getAll();
-	res.render("articles.ejs", {
-		articles: _articles_
-	});
+	if(req.session.token) {
+		res.render("articles.ejs", {
+			articles: _articles_,
+			logged: true
+		});
+	}
+	else {
+		res.render("articles.ejs", {
+			articles: _articles_,
+			logged: false
+		});
+	}
 });
 
 app.get("/login", function(req, res) {
 	if(req.session.token) {
-		req.session.token = null;
+		res.render("login.ejs", { logged: true });
 	}
-	res.render("test_login.ejs");
+	else {
+		res.render("login.ejs", { logged: false });
+	}
 });
 
 app.post("/login", async function(req, res) {
 	const loginUsrData = req.body;
 	console.log(loginUsrData);
-	const result = await db.verifyLoginSP(loginUsrData.usr, loginUsrData.psw);
+	const result = await db.verifyLoginSP(loginUsrData.username, loginUsrData.password);
 	console.log(result);
 
 	if (result.idVerified) {
 		req.session.token = {
 			id: result.idVerified,
-			username: loginUsrData.usr,
+			username: loginUsrData.username,
 			roleId: result.roleId,
 			status: result.status
 		};
@@ -190,7 +206,17 @@ app.post("/taenpanel/articles/approve", Middlewares.isAdmin, async function(req,
 });
 
 app.get("/aboutus", function(req, res) {
-	res.render("about-us.ejs");
+	if(req.session.token) {
+		res.render("about-us.ejs", { logged: true });
+	}
+	else {
+		res.render("about-us.ejs", { logged: false });
+	}
+});
+
+app.get("/logout", function(req, res) {
+	req.session.token = null;
+	res.redirect("/");
 });
 
 app.get("*", function(_, res) {

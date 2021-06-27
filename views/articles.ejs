@@ -1,37 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
-            crossorigin="anonymous">
-    <title>Document</title>
+    <title>Articles</title>
 
-	<style>
-		body{
-			background-image: url("/img/mr.png");
-		}
-	</style>
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/FJvzFPT.png">
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="/styles/reset.css">
+    <link rel="stylesheet" type="text/css" href="/styles/navbar.css">
+    <link rel="stylesheet" type="text/css" href="/styles/swiper.css">
+    <link rel="stylesheet" type="text/css" href="/styles/articles.css">
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.js" defer></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+    <script src="js/swiper.js" defer></script>
+
+
+    <script src="js/toggleNav.js" defer></script>
 </head>
+
 <body>
-	<div class = "container">
-	    <h1>All articles</h1>
-    <div class = "row">
-        <% articles.filter(article => article.IsApproved).map(article => { %>
-        <div class="col-md-4">
-            <div class="card" style="width: 18rem;">
-                <img src="" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Article Title: <%= article.Title %> </h5>
-                    <p class="card-text">Author: <%= article.First_name %></p>
-                    <a href="/articles/view/<%= article.Id%>" class="btn btn-primary">Go somewhere</a>
+   <%- include ("partials/header.ejs", {logged: logged}) %>
+
+    <!-- Swiper -->
+    <div class="swiper-container mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide slide-1"></div>
+            <div class="swiper-slide slide-2">Slide 2</div>
+            <div class="swiper-slide slide-3">Slide 3</div>
+            <div class="swiper-slide">Slide 4</div>
+            <div class="swiper-slide">Slide 5</div>
+            <div class="swiper-slide">Slide 6</div>
+            <div class="swiper-slide">Slide 7</div>
+            <div class="swiper-slide">Slide 8</div>
+            <div class="swiper-slide">Slide 9</div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+
+    <div class="wrapper">
+	<% articles.filter(article => article.IsApproved).map(article => { %>
+	<a href="/articles/view/<%=article.Id%>">
+        <div class="card">
+            <p class="data-tag"><%=article.CreatedAt.toString().substring(4, 25)%></p>
+            <div class="card-banner">
+                <img class="banner-img" src="https://i.imgur.com/P3amfbP.jpg" alt="banner-img">
+
+            </div>
+            <div class="card-body">
+                <h2 class="blog-title"><%=article.Title%></h2>
+                <p class="blog-description"><%=article.Content.toString().substring(0, 20)%></p>
+
+                <div class="card-profile">
+                    <img class="profile-img" src="data:image/png;base64,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"
+                        alt="">
+                    <div class="card-profile-info">
+                        <h3 class="profile-name"><%=article.First_name%></h3>
+                    </div>
                 </div>
             </div>
+
         </div>
-        <% })%>
+	</a>
+	<% })%>
+
+
+    <div class="wrapper">
+        <div class="card">
+            <div class="new-article">
+                <img src="https://i.imgur.com/ZeybRFh.png" width="350" alt="plus">
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="new-article">
+                <img src="https://i.imgur.com/ZeybRFh.png" width="350" alt="plus">
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="new-article">
+                <img src="https://i.imgur.com/ZeybRFh.png" width="350" alt="plus">
+            </div>
+
+        </div>
+
     </div>
-</div>
 </body>
+
+</html>

@@ -13,8 +13,18 @@ const inputValidation = require("../../utils/validation");
 router.get("/", function(req, res) {
 	log.info("Invoking register");
 	const errors = req.session.errors;
-	// res.render("test_register.ejs", { errors });
-	res.render("registration.ejs", { errors });
+	if(req.session.token) {
+		res.render("registration.ejs", {
+			errors: errors,
+			logged: true
+		});
+	}
+	else {
+		res.render("registration.ejs", {
+			errors: errors,
+			logged: false
+		});
+	}
 });
 
 router.post("/", async function(req, res) {
