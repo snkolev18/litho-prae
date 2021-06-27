@@ -62,6 +62,10 @@ body {
     background-color: #0c4ea0;
 }
 
+.form .deletebtn {
+    float: left;
+}
+
 .message {
     display: none;
     color: red;
