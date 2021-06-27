@@ -5,7 +5,7 @@ function checkUserRegistrationData(data) {
 		errors.push({ message: "Invalid username!" });
 	}
 
-	if (!/^\w+@\w+\.\w+$/.test(data.email)) {
+	if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/.test(data.email)) {
 		errors.push({ message: "Invalid email!" });
 	}
 

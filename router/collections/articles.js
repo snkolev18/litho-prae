@@ -4,6 +4,7 @@ const Middlewares = require("../../middlewares/auth");
 const { ArticleRepository } = require("../../repositories/ArticleRepository");
 const { DbEx } = require("../../utils/dbEx");
 const limiter = require("../../config/limiter_config");
+const { renderContentToHTML } = require("../../utils/contentRendering");
 let articles = undefined;
 
 router.get("/view/:id", limiter.configureLimiter(5, 0.5), async function(req, res) {
@@ -28,11 +29,25 @@ router.get("/view/:id", limiter.configureLimiter(5, 0.5), async function(req, re
 			// req.session.token.commenttingOnId = article.Id;
 			const comments = await articles.getCommentsForArticle(article.Id);
 			await articles.updateViewsForArticle(article.Id);
-			res.render("test_viewArticle.ejs", {
-				article: article,
-				comments: comments,
-				id: id
-			});
+
+			article.Content = renderContentToHTML(article.Content);
+
+			if(req.session.token) {
+				res.render("article.ejs", {
+					article: article,
+					comments: comments,
+					id: id,
+					logged: true
+				});
+			}
+			else {
+				res.render("article.ejs", {
+					article: article,
+					comments: comments,
+					id: id,
+					logged: true
+				});
+			}
 		}
 	}
 });

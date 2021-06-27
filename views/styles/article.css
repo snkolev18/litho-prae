@@ -1,13 +1,11 @@
 body {
     background: linear-gradient(#3f51b5, #000);
-    height: 100vh;
     background-size: cover;
     background-position: center;
 }
 
 .content {
     width: 50%;
-    height: 100vh;
     margin: 0 auto;
     position: relative;
     overflow: hidden;
@@ -30,7 +28,7 @@ body {
 .content p {
     text-align: center;
     font-size: 20px;
-    padding: 40px;
+    padding: 10px;
 }
 
 .content textarea {
@@ -55,4 +53,12 @@ body {
     background: #0D66D0;
     color: #ffffff;
     font-weight: 750;
+}
+
+em {
+	font-style: italic;
+}
+
+strong {
+	font-weight: bold;
 }
