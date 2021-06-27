@@ -13,22 +13,22 @@
 
     <link rel="icon" type="image/x-icon" href="https://i.imgur.com/FJvzFPT.png">
 
-    <link rel="stylesheet" type="text/css" href="styles/reset.css">
-    <link rel="stylesheet" type="text/css" href="styles/registration.css">
-	<link rel="stylesheet" type="text/css" href="/styles/navbar.css">
+    <link rel="stylesheet" type="text/css" href="/styles/reset.css">
+    <link rel="stylesheet" type="text/css" href="/styles/registration.css">
+    <link rel="stylesheet" type="text/css" href="/styles/navbar.css">
 </head>
 
 <body>
-<%- include ("partials/header.ejs", {logged: logged}) %>
-    <div class="form">
-		<form action="/login" method="POST">
-			<label for="username">Username:</label>
-			<input type="text" name="username" id="username" class="form-control">
-			<label for="password">Password:</label>
-			<input type="password" name="password" id="password" class="form-control">
-			<button>Sign in</button>
-		</form>
-    </div>
+    <%- include ("partials/header.ejs", {logged: logged}) %>
+        <div class="form">
+            <form action="/login" method="POST">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" class="form-control">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" class="form-control">
+                <button>Sign in</button>
+            </form>
+        </div>
 
 </body>
 

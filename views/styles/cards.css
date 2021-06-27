@@ -1,6 +1,6 @@
 /*Accidents statistics styling*/
 
-.news {
+.about-us {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -10,7 +10,7 @@
 
 /*Accidents statistics card styling*/
 
-.news-card {
+.about-us-card {
     width: 350PX;
     line-height: 1.5em;
     margin-top: 40px;
@@ -72,5 +72,5 @@
     color: black;
     font-weight: 700;
     padding-top: -10px;
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
