@@ -1,0 +1,25 @@
+<header>
+        <nav class="main-nav">
+            <div>
+                <a class="brand" href="/">Home</a>
+            </div>
+
+            <ul class="main-nav-ul" id="mainNavUl">
+                <li><a href="/articles">Articles</a></li>
+                <li><a href="/contact">Contact us</a></li>
+                <li><a href="/aboutus">About us</a></li>
+                <li>
+                    <% if (logged) {%>
+                    <a href="/logout">Logout</a>
+                    <% } else { %>
+                    <a href="login">Login</a>
+                    <% } %>
+                </li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+
+            <div class="menu-toggle-btn" onclick="onToggleNav()">
+                <i class="bi bi-list" id="menuIcon"></i>
+            </div>
+        </nav>
+</header>

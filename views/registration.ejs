@@ -14,57 +14,33 @@
 
     <link rel="icon" type="image/x-icon" href="https://i.imgur.com/FJvzFPT.png">
 
-    <link rel="stylesheet" type="text/css" href="styles/reset.css">
-    <link rel="stylesheet" type="text/css" href="styles/navbar.css">
-    <link rel="stylesheet" type="text/css" href="styles/registration.css">
+    <link rel="stylesheet" type="text/css" href="/styles/reset.css">
+    <link rel="stylesheet" type="text/css" href="/styles/navbar.css">
+    <link rel="stylesheet" type="text/css" href="/styles/registration.css">
 
-
-
-    <script src="https://unpkg.com/swiper/swiper-bundle.js" defer></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
-    <script src="js/swiper.js" defer></script>
     <script src="js/validation.js" defer></script>
-
-
-    <script src="js/toggleNav.js" defer></script>
-
 </head>
 
 <body>
-    <header>
-        <nav class="main-nav">
-            <div>
-                <a class="brand" href="#">Brand</a>
-            </div>
-
-            <ul class="main-nav-ul" id="mainNavUl">
-                <li><a href="#">Home page</a></li>
-                <li><a href="#">Second page</a></li>
-                <li><a href="#">Third page</a></li>
-                <li><a href="#">Fourth page</a></li>
-                <li><a href="#">Fifth page</a></li>
-
-            </ul>
-
-            <div class="menu-toggle-btn" onclick="onToggleNav()">
-                <i class="bi bi-list" id="menuIcon"></i>
-            </div>
-        </nav>
-    </header>
-
-    <hr>
+    <%- include ("partials/header.ejs", {logged: logged}) %>
     <div class="form">
         <h1>Create an account</h1>
         <p>Already have an account? Sign in</p>
         <%
             if (errors) {
-                %> <ul> <%
+                %>
+            <ul>
+                <%
                 for(let error of errors) {
                 %>
-                    <li style="color:red"><%=error.message%></li>
-                <%
+                    <li style="color:red">
+                        <%=error.message%>
+                    </li>
+                    <%
                 }
-                %> </ul> <%
+                %>
+            </ul>
+            <%
             }
 	    %>
         <form action="/register" method="POST">
@@ -87,7 +63,7 @@
                 <small>Please enter an valid email.</small>
             </p>
 
-			<label for="username">Username:</label>
+            <label for="username">Username:</label>
             <input type="text" name="username" id="username" class="form-control" onblur="onFocusOut('username')" onkeyup="onKeyUp('username')">
             <p id="messageUsername" class="message">
                 <small>The username field is required.</small>

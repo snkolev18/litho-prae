@@ -33,29 +33,7 @@
 
 
 <body>
-    <header>
-        <nav class="main-nav ">
-            <div>
-                <a class="brand " href="# ">Brand</a>
-            </div>
-
-            <ul class="main-nav-ul " id="mainNavUl ">
-                <li><a href="# ">Home page</a></li>
-                <li><a href="# ">Second page</a></li>
-                <li><a href="# ">Third page</a></li>
-                <li><a href="# ">Fourth page</a></li>
-                <li><a href="# ">Fifth page</a></li>
-            </ul>
-
-            <div class="menu-toggle-btn " onclick="onToggleNav() ">
-                <i class="bi bi-list " id="menuIcon "></i>
-            </div>
-        </nav>
-    </header>
-
-    <br>
-    <br>
-    <br>
+    <%- include ("partials/header.ejs", {logged: logged}) %>
 
     <div class="news ">
 

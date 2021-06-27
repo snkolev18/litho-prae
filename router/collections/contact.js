@@ -7,7 +7,12 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", function(req, res) {
-	res.render("contact.ejs");
+	if(req.session.token) {
+		res.render("contact.ejs", { logged: true });
+	}
+	else {
+		res.render("contact.ejs", { logged: false });
+	}
 });
 
 
