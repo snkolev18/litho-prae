@@ -6,7 +6,7 @@ const { DbEx } = require("../../utils/dbEx");
 const limiter = require("../../config/limiter_config");
 let articles = undefined;
 
-router.get("/view/:id", Middlewares.isAuthenticated, limiter.configureLimiter(5, 0.5), async function(req, res) {
+router.get("/view/:id", limiter.configureLimiter(5, 0.5), async function(req, res) {
 	if(isNaN(req.params.id)) {
 		res.status(400).render("error-page.ejs", {
 			title: "Invalid article",
@@ -25,7 +25,7 @@ router.get("/view/:id", Middlewares.isAuthenticated, limiter.configureLimiter(5,
 			});
 		}
 		else {
-			req.session.token.commenttingOnId = article.Id;
+			// req.session.token.commenttingOnId = article.Id;
 			const comments = await articles.getCommentsForArticle(article.Id);
 			await articles.updateViewsForArticle(article.Id);
 			res.render("test_viewArticle.ejs", {
@@ -53,7 +53,7 @@ router.post("/view/comment", Middlewares.isAuthenticated, limiter.configureLimit
 	const result = await articles.commentOnArticle(comment.comment, comment.articleId, req.session.token.id);
 	console.log(result);
 	res.redirect(`/articles/view/${comment.articleId}`);
-	delete req.session.token.commenttingOnId;
+	// delete req.session.token.commenttingOnId;
 });
 
 router.get("/new", Middlewares.isAuthenticated, async function(req, res) {
@@ -87,7 +87,13 @@ router.get("/edit/:id", Middlewares.isAuthenticated, async function(req, res) {
 			return;
 		}
 		if (req.session.token.id != articleForEdit.AuthorId) {
-			res.redirect("/");
+			res.status(404).render("error-page.ejs", {
+				title: "Error occured",
+				statusCode: 403,
+				message: "Forbidden"
+			});
+			res.end();
+			return;
 		}
 		else{
 			req.session.token.articleAuthorId = articleForEdit.AuthorId;

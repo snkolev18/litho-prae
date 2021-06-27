@@ -189,6 +189,10 @@ app.post("/taenpanel/articles/approve", Middlewares.isAdmin, async function(req,
 	res.redirect("/taenpanel/articles");
 });
 
+app.get("/aboutus", function(req, res) {
+	res.render("about-us.ejs");
+});
+
 app.get("*", function(_, res) {
 	res.status(404).render("error-page.ejs", {
 		title: "Page not found",
@@ -196,6 +200,7 @@ app.get("*", function(_, res) {
 		message: "We can't find the page you're looking for."
 	});
 });
+
 
 app.use(async (req, res, next) => {
 	console.log("DEFAULT EXCEPTION HANDLER");
