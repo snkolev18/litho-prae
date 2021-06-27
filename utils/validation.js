@@ -17,4 +17,15 @@ function checkUserRegistrationData(data) {
 	return errors;
 }
 
+function checkTagData(tag) {
+	const errors = new Array();
+
+	if (!/[a-zA-Z-]{3,20}$/.test(tag)) {
+		errors.push({ message: "Invalid tag name or length" });
+	}
+
+	return errors;
+}
+
 module.exports.checkUserRegistrationData = checkUserRegistrationData;
+module.exports.checkTagData = checkTagData;

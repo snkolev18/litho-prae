@@ -36,14 +36,13 @@ class ArticleRepository {
 	}
 
 	// TO DO
-	async create(article, time, authorId) {
+	async create(article, authorId) {
 		// exec SP (article.name, arg)
 		try {
 			const result = await this.#db.request()
 				.input("Title", NVarChar, article.title)
 				.input("Content", NVarChar, article.content)
 				.input("AuthorId", NVarChar, authorId)
-				.input("CreatedAt", DateTime2, time)
 				.execute("CreateNewArticle");
 			console.log(result);
 		}
@@ -120,6 +119,42 @@ class ArticleRepository {
 		}
 		catch (err) {
 			console.error(err);
+		}
+	}
+
+	async assignTagToArticle(articleId, tagId) {
+		try {
+			const result = await this.#db.request()
+				.input("TagId", Int, tagId)
+				.input("ArticleId", Int, articleId)
+				.execute("AssignTagToArticle")
+			console.log(result);
+		}
+		catch (err) {
+			console.log(err);
+		}
+	}
+
+	async createTag(name) {
+		try {
+			const result = await this.#db.request()
+				.input("Name", NVarChar, name)
+				.execute("CreateTag")
+			console.log(result);
+		}
+		catch(err) {
+			console.log(err);
+		}
+	}
+
+
+	async getAllTags() {
+		try {
+			const tags = await this.#db.request().query`SELECT Id, Name FROM Tags ORDER BY Id ASC`
+			return tags.recordset;
+		}
+		catch (err) {
+			console.log(err)
 		}
 	}
 

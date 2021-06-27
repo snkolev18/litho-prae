@@ -1,0 +1,6 @@
+body{
+	background-image: url("/img/mr.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	min-height: 100vh;
+}

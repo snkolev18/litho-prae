@@ -11,6 +11,7 @@ let db = undefined;
 let articles = undefined;
 const PORT = process.env.PORT || 1337;
 const limiter = require("./config/limiter_config");
+const inputValidation = require("./utils/validation");
 
 
 // Middlewares
@@ -128,9 +129,11 @@ app.get("/taenpanel", Middlewares.isAdmin, async function(req, res) {
 
 app.get("/taenpanel/articles", Middlewares.isAdmin, async function(req, res) {
 	const _articles_ = await articles.getAll();
+	const tags = await articles.getAllTags();
 	console.log(_articles_);
 	res.render("test_adminArticles.ejs", {
-		articles: _articles_
+		articles: _articles_,
+		tags: tags
 	});
 });
 
@@ -203,6 +206,29 @@ app.post("/taenpanel/articles/approve", Middlewares.isAdmin, async function(req,
 	const result = await articles.approve(id);
 	console.log(`Successfully approved article with id ${id}`);
 	res.redirect("/taenpanel/articles");
+});
+
+app.get("/taenpanel/articles/tags", Middlewares.isAdmin, function(req, res) {
+	const errors = req.session.tagErrors;
+	res.render("createTag.ejs", {
+		errors: errors
+	});
+});
+
+app.post("/taenpanel/articles/tags", Middlewares.isAdmin, async function(req, res) {
+	const tagName = req.body.tag;
+	const errors = inputValidation.checkTagData(tagName);
+	console.log(errors);
+	if (errors.length) {
+		req.session.tagErrors = errors;
+		console.log(req.session.tagErrors);
+	}
+	else {
+		req.session.tagErrors = [];
+		const result = await articles.createTag(tagName);
+		console.log(result);
+	}
+	res.redirect("/taenpanel/articles/tags");
 });
 
 app.get("/aboutus", function(req, res) {

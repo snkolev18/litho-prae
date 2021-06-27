@@ -72,13 +72,16 @@ router.post("/view/comment", Middlewares.isAuthenticated, limiter.configureLimit
 });
 
 router.get("/new", Middlewares.isAuthenticated, async function(req, res) {
-	res.render("test_createArticle.ejs");
+	const tags = await articles.getAllTags();
+	res.render("test_createArticle.ejs", {
+		tags: tags
+	});
 });
 
 router.post("/new", Middlewares.isAuthenticated, limiter.configureLimiter(10, 5), async function(req, res) {
 	const article = req.body;
-	console.log(`Receiving new article: ${article}`);
-	await articles.create(article, new Date(), req.session.token.id);
+	console.log(`Receiving new article: ${article.title}, ${article.content}`);
+	await articles.create(article, req.session.token.id);
 });
 
 router.get("/edit/:id", Middlewares.isAuthenticated, async function(req, res) {

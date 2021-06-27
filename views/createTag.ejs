@@ -9,15 +9,28 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/articles/new" method="POST">
+	<%
+		if (errors) {
+			%>
+		<ul>
+			<%
+			for(let error of errors) {
+			%>
+				<li style="color:red">
+					<%=error.message%>
+				</li>
+				<%
+			}
+			%>
+		</ul>
+		<%
+		}
+	%>
+    <form action="/taenpanel/articles/tags" method="POST">
     	<hr>
-    	<label for="title"><b>Title</b></label>
-    	<input type="text" placeholder="Enter Username" name="title" id="title"  value="title" required>
-
-    	<label for="content"><b>Content</b></label>
-    	<input type="text" placeholder="Enter Password" name="content" id="content"  value="content" required>
-		<button type="submit" class="registerbtn">Post</button>
-	</form>
+    	<label for="title"><b>Create new tag</b></label>
+    	<input type="text" placeholder="Enter Tag Name" name="tag" id="tag"  value="tag" required>
+    <button type="submit" class="registerbtn">Post</button>
   </div>
 </form>
 </body>
