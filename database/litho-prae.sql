@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [litho-prae-db]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  Database [litho-prae-db]    Script Date: 6/27/2021 7:14:31 PM ******/
 CREATE DATABASE [litho-prae-db]
  CONTAINMENT = NONE
  ON  PRIMARY
@@ -80,7 +80,7 @@ ALTER DATABASE [litho-prae-db] SET QUERY_STORE = OFF
 GO
 USE [litho-prae-db]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -109,7 +109,7 @@ CREATE TABLE [dbo].[Users](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Articles]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  Table [dbo].[Articles]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +130,7 @@ CREATE TABLE [dbo].[Articles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[vAllArticles]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  View [dbo].[vAllArticles]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -145,7 +145,7 @@ INNER JOIN Users u
 ON
 a.AuthorId = u.Id
 GO
-/****** Object:  View [dbo].[GetCommentsForArticle]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  View [dbo].[GetCommentsForArticle]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -159,7 +159,7 @@ Users u
 ON
 a.AuthorId = u.Id
 GO
-/****** Object:  Table [dbo].[Comments]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  Table [dbo].[Comments]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -176,7 +176,7 @@ CREATE TABLE [dbo].[Comments](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[vGetCommentsForArticle]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  View [dbo].[vGetCommentsForArticle]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -190,7 +190,7 @@ Users u
 ON
 c.AuthorId = u.Id
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -204,21 +204,25 @@ CREATE TABLE [dbo].[Roles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tags]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  Table [dbo].[Tags]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Tags](
-	[Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nvarchar](20) NOT NULL,
  CONSTRAINT [PK_Tags] PRIMARY KEY CLUSTERED
 (
 	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [UQ_Tags] UNIQUE NONCLUSTERED
+(
+	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TagsArticles]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  Table [dbo].[TagsArticles]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -233,7 +237,7 @@ CREATE TABLE [dbo].[TagsArticles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Articles]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  Index [IX_Articles]    Script Date: 6/27/2021 7:14:31 PM ******/
 CREATE NONCLUSTERED INDEX [IX_Articles] ON [dbo].[Articles]
 (
 	[CreatedAt] DESC
@@ -286,7 +290,7 @@ ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [CK_Users_Email] CHECK  ((
 GO
 ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [CK_Users_Email]
 GO
-/****** Object:  StoredProcedure [dbo].[AddViewsForArticle]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddViewsForArticle]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -300,7 +304,7 @@ UPDATE [dbo].[Articles]
 	SET [Views] = [Views] + @ViewCount
 WHERE Id = @ArticleId
 GO
-/****** Object:  StoredProcedure [dbo].[ApproveArticle]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[ApproveArticle]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -313,7 +317,21 @@ UPDATE [dbo].[Articles]
 	SET IsApproved = 1
 WHERE Id = @Id
 GO
-/****** Object:  StoredProcedure [dbo].[CommentOnArticle]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[AssignTagToArticle]    Script Date: 6/27/2021 7:14:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[AssignTagToArticle]
+@TagId int,
+@ArticleId int
+AS
+
+INSERT INTO [dbo].[TagsArticles]
+	(TagId, ArticleId)
+VALUES(@TagId, @ArticleId)
+GO
+/****** Object:  StoredProcedure [dbo].[CommentOnArticle]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -328,7 +346,7 @@ INSERT INTO [dbo].[Comments]
 	(ArticleId, AuthorId, CreatedAt, Content)
 VALUES(@ArticleId, @AuthorId, GETDATE(), @Comment)
 GO
-/****** Object:  StoredProcedure [dbo].[CreateNewArticle]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateNewArticle]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -345,7 +363,20 @@ INSERT INTO [dbo].[Articles]
 		(Title, Content, AuthorId, CreatedAt, UpdatedAt, LastModifiedById)
 VALUES	(@Title, @Content, @AuthorId, @CreatedAt, @CreatedAt, @AuthorId)
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteArticle]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateTag]    Script Date: 6/27/2021 7:14:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[CreateTag]
+@Name nvarchar(20)
+AS
+
+INSERT INTO [dbo].[Tags]
+	(Name)
+VALUES(@Name)
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteArticle]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -357,7 +388,7 @@ AS
 DELETE FROM [dbo].[Articles]
 	WHERE Id = @Id
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteComment]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[DeleteComment]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -370,7 +401,7 @@ AS
 DELETE FROM [dbo].[Comments]
 	WHERE Id = @Id
 GO
-/****** Object:  StoredProcedure [dbo].[RegisterAUser]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[RegisterAUser]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -416,7 +447,7 @@ INSERT INTO [litho-prae-db].[dbo].[Users]
 
 VALUES(@FirstName, @LastName, @Username, @Email, HASHBYTES('SHA2_512', @Password + @Salt), @Salt, @Status)
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateArticle]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[UpdateArticle]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -432,7 +463,7 @@ UPDATE [dbo].[Articles]
 	SET Title = @Title, Content = @Content, UpdatedAt = GETDATE()
 WHERE Id = @Id
 GO
-/****** Object:  StoredProcedure [dbo].[VerifyLogin]    Script Date: 6/27/2021 12:07:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[VerifyLogin]    Script Date: 6/27/2021 7:14:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
