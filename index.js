@@ -122,12 +122,18 @@ app.post("/login", async function(req, res) {
 			res.redirect(req.session.returnUrl);
 		}
 		else {
-			res.send("Qsha, lognat si");
+			res.redirect("/");
 			console.log(`Current user ${req.session.token.username}`);
+			res.end();
+			return;
 		}
 	}
 	else {
-		res.send("Qsha, Ne si lognat");
+		res.status(401).render("error-page.ejs", {
+			title: "Unauthorised",
+			statusCode: 4,
+			message: "Yasha, ne si lognat"
+		});
 	}
 });
 

@@ -9,10 +9,10 @@
                 <li><a href="/contact">Contact us</a></li>
                 <li><a href="/aboutus">About us</a></li>
                 <li>
-                    <% if (logged) {%>
-                    <a href="/logout">Logout</a>
+                    <% if (!logged) {%>
+                    <a href="/login">Login</a>
                     <% } else { %>
-                    <a href="login">Login</a>
+                    <a href="/logout">Logout</a>
                     <% } %>
                 </li>
                 <li><a href="/register">Register</a></li>
