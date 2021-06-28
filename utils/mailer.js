@@ -32,6 +32,30 @@ class Mailer {
 			}
 			console.log(info);
 		});
+	}H
+
+	sendHelp(sender) {
+		this.#mailBody = {
+			from: sender.email,
+			to: 'lithoprae@gmail.com',
+			subject: `Съобщение от ${sender.name}:  ${sender.typeOfAnimal} има проблем - ${sender.type}`,
+			text: `
+         			Населено място: ${sender.settlePoint}
+					 Квартал: ${sender.addressQuarterText}
+					 Улица: ${sender.addressStreetText}
+					 Улица №: ${sender.addressStreetNumberText}
+					 Описание на местоположението: ${sender.addressCommentsText}
+					 Е-Поща: ${sender.email}
+					 Телефон: ${sender.phone}
+        	 `
+		};
+
+		this.#mailTransporter.sendMail(this.#mailBody, function(err, info) {
+			if(err) {
+				console.log(err);
+			}
+			console.log(info);
+		});
 	}
 
 	// Private members
