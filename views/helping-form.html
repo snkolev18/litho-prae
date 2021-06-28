@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device=width, initial-scale=1.0">
+    <title>Helping</title>
+
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="styles/helping-form.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <nav class="main-nav">
+            <div>
+                <a class="brand" href="/">Home</a>
+            </div>
+
+            <ul class="main-nav-ul" id="mainNavUl">
+                <li><a href="/articles">Articles</a></li>
+                <li><a href="/contact">Contact us</a></li>
+                <li><a href="/aboutus">About us</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+
+            <div class="menu-toggle-btn" onclick="onToggleNav()">
+                <i class="bi bi-list" id="menuIcon"></i>
+            </div>
+        </nav>
+    </header>
+
+    <div class="content">
+        <div class="map">
+            <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=25.021362304687504%2C42.11656135038903%2C29.608154296875004%2C43.775060351224695&amp;layer=mapnik" style="border: 1px solid black"></iframe><br/>
+        </div>
+        <div class="form-container">
+            <form class="contact-form">
+                <h1>Incident</h1>
+                <hr>
+                <h3 for="typeOfAnimal">What species is the endangered animal:</h3>
+                </br>
+                <input name="typeOfanimal" id="typeOfAnimal" type="text" placeholder="Type">
+                <h3 for="type">What is the problem with the animal:</h3>
+                </br>
+                <input name="type" id="type" type="text" placeholder="Problem">
+                </br>
+                <h3>Address:</h3>
+                </br>
+                <input id="settlePoint" type="text" placeholder="Populated place">
+
+                <input id="addressQuarterText" type="text" placeholder="Neighborhood">
+
+                <input id="addressStreetText" type="text" placeholder="Street">
+
+                <input id="addressStreetNumberText" type="text" placeholder="Street Number">
+
+                <textarea id="addressCommentsText" maxlength="1024" placeholder="Location description"></textarea>
+
+                <br>
+
+                <h3>Who:</h3>
+                </br>
+                <input type="text" id="name" placeholder="Full name *"></br>
+                <input type="email" id="email" placeholder="E-mail *"></br>
+                <input type="text" id="phone" placeholder="Phone *"></br>
+
+                <input type="submit" class="submit" value="Send">
+            </form>
+        </div>
+
+
+    </div>
+
+
+
+</body>
+
+</html>
