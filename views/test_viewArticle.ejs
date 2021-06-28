@@ -19,17 +19,22 @@
 	<div class="content">
         <img src="https://i.imgur.com/P3amfbP.jpg" alt="img">
         <h1><%= article.Title %></h1>
-
-        <%- article.Content %>
+		<div class="card">
+			<div class="card-body">
+				<%- article.Content %>
+			</div>
+		</div>
 		<br>
+
+		<div class="content">
 		<% comments.map((comment) => { %>
 				<p><%= comment.Content %></p><br>
 			<% }) %>
-		<hr>
+		</div>
+
 		<form action="/articles/view/comment" method="POST">
 			<input type="hidden" name="articleId" value="<%=id%>">
-    		<textarea rows="3" cols="50" placeholder="Add a comment..."></textarea>
-			</textarea>
+            <textarea name="message" cols="70" rows="10"></textarea>
     		<button type="submit">Comment</button>
 		</form>
     </div>

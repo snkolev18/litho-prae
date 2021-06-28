@@ -159,6 +159,17 @@ class ArticleRepository {
 		}
 	}
 
+	async sortByViews() {
+		try {
+			let articles = await this.getAll()
+			articles.sort((article1, article2) => article2.Views - article1.Views)
+			return articles != undefined ? articles : false;
+		}
+		catch (err) {
+			console.log(err);
+		}
+	}
+
 	#db
 }
 

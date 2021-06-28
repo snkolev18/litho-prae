@@ -60,12 +60,20 @@ app.use(limiter.configureLimiter(60, 1));
 
 require("./router/router")(app);
 
-app.get("/", function(req, res) {
+app.get("/", async function(req, res) {
+	const sortedArticles = await articles.sortByViews();
+	console.log(sortedArticles);
 	if(req.session.token) {
-		res.render("index.ejs", { logged: true });
+		res.render("index.ejs", {
+			logged: true,
+			sortedArticles: sortedArticles
+		});
 	}
 	else {
-		res.render("index.ejs", { logged: false });
+		res.render("index.ejs", {
+			logged: true,
+			sortedArticles: sortedArticles
+		});
 	}
 });
 

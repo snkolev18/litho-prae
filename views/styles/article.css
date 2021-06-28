@@ -32,7 +32,7 @@ body {
 }
 
 .content textarea {
-    position: absolute;
+    /* position: absolute; */
     bottom: 0;
     width: 80%;
     margin-left: 20px;
@@ -45,7 +45,7 @@ body {
     bottom: 0;
     margin-bottom: 35px;
     right: 0;
-    margin-right: 80px;
+    margin-right: 40px;
     padding: 10px 15px;
     border-radius: 15px;
     outline: none;
@@ -53,6 +53,10 @@ body {
     background: #0D66D0;
     color: #ffffff;
     font-weight: 750;
+}
+
+.information {
+	border: #000;
 }
 
 em {
