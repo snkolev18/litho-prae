@@ -19,8 +19,8 @@ router.get("/", function(req, res) {
 router.post("/", function(req, res) {
 	const mailBody = req.body;
 	console.log(mailBody);
-	// mailer.sendHelp(mailBody);
-	// res.redirect("/contact");
+	mailer.sendHelp(mailBody);
+	res.redirect("/help");
 });
 
 module.exports = router;

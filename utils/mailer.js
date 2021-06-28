@@ -40,14 +40,14 @@ class Mailer {
 			to: 'lithoprae@gmail.com',
 			subject: `Съобщение от ${sender.name}:  ${sender.typeOfAnimal} има проблем - ${sender.type}`,
 			text: `
-         			Населено място: ${sender.settlePoint}
-					 Квартал: ${sender.addressQuarterText}
-					 Улица: ${sender.addressStreetText}
-					 Улица №: ${sender.addressStreetNumberText}
-					 Описание на местоположението: ${sender.addressCommentsText}
-					 Е-Поща: ${sender.email}
-					 Телефон: ${sender.phone}
-        	 `
+				Населено място: ${sender.settlePoint}
+				Квартал: ${sender.addressQuarterText}
+				Улица: ${sender.addressStreetText}
+				Улица №: ${sender.addressStreetNumberText}
+				Описание на местоположението: ${sender.addressCommentsText}
+				Е-Поща: ${sender.email}
+				Телефон: ${sender.phone}
+        	 `.replace(/\t/g,"")
 		};
 
 		this.#mailTransporter.sendMail(this.#mailBody, function(err, info) {
