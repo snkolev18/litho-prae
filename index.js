@@ -25,13 +25,13 @@ app.use(helmet.contentSecurityPolicy(
 
 			/* ["'self'"]*/
 			defaultSrc: helmet.contentSecurityPolicy.dangerouslyDisableDefaultSrc,
-			scriptSrc: ["'self'", "https://unpkg.com/", "'unsafe-inline'"],
+			scriptSrc: ["'self'", "https://unpkg.com/", "'unsafe-inline'", "https://getbootstrap.com", "https://kit.fontawesome.com/", "https://www.openstreetmap.org/"],
 			objectSrc: ["'none'"],
 			upgradeInsecureRequests: [],
-			imgSrc: ["'self'", "https://i.imgur.com/", "https://media.giphy.com/media/Y4K9JjSigTV1FkgiNE/giphy.gif", "data:"],
-			fontSrc: ["'self'", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/", "https://cdn.jsdelivr.net/", "https://unpkg.com/", "data:"],
-			childSrc: ["'none'"],
-			styleSrc: ["'self'", "https://cdn.jsdelivr.net/", "https://i.imgur.com/", "https://unpkg.com/", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/"]
+			imgSrc: ["'self'", "https://i.imgur.com/", "https://media.giphy.com/media/Y4K9JjSigTV1FkgiNE/giphy.gif", "data:", "https://getbootstrap.com"],
+			fontSrc: ["'self'", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/", "https://cdn.jsdelivr.net/", "https://unpkg.com/", "data:", "https://getbootstrap.com", "https://cdnjs.cloudflare.com/"],
+			childSrc: ["'none'", "https://www.openstreetmap.org/"],
+			styleSrc: ["'self'", "https://cdn.jsdelivr.net/", "https://i.imgur.com/", "https://unpkg.com/", "https://fonts.gstatic.com/", "https://fonts.googleapis.com/", "https://getbootstrap.com", "https://cdnjs.cloudflare.com"]
 		}
 	}
 ), helmet.crossOriginResourcePolicy());
@@ -71,7 +71,7 @@ app.get("/", async function(req, res) {
 	}
 	else {
 		res.render("index.ejs", {
-			logged: true,
+			logged: false,
 			sortedArticles: sortedArticles
 		});
 	}
@@ -131,7 +131,7 @@ app.post("/login", async function(req, res) {
 	else {
 		res.status(401).render("error-page.ejs", {
 			title: "Unauthorised",
-			statusCode: 4,
+			statusCode: 401,
 			message: "Yasha, ne si lognat"
 		});
 	}
@@ -245,7 +245,7 @@ app.post("/taenpanel/articles/tags", Middlewares.isAdmin, async function(req, re
 	res.redirect("/taenpanel/articles/tags");
 });
 
-app.get("/aboutus", function(req, res) {
+app.get("/about-us", function(req, res) {
 	if(req.session.token) {
 		res.render("about-us.ejs", { logged: true });
 	}

@@ -1,25 +1,40 @@
-<header>
-        <nav class="main-nav">
-            <div>
-                <a class="brand" href="/">Home</a>
-            </div>
+<link rel="stylesheet" href="https://getbootstrap.com/docs/3.4/assets/css/ie10-viewport-bug-workaround.css">
+<link rel="stylesheet" href="https://getbootstrap.com/docs/3.4/examples/navbar/navbar.css">
+<link rel="stylesheet" href="https://getbootstrap.com/docs/3.4/dist/css/bootstrap.min.css">
 
-            <ul class="main-nav-ul" id="mainNavUl">
-                <li><a href="/articles">Articles</a></li>
-                <li><a href="/contact">Contact us</a></li>
-                <li><a href="/aboutus">About us</a></li>
-                <li>
-                    <% if (!logged) {%>
-                    <a href="/login">Login</a>
-                    <% } else { %>
-                    <a href="/logout">Logout</a>
-                    <% } %>
-                </li>
-                <li><a href="/register">Register</a></li>
-            </ul>
-
-            <div class="menu-toggle-btn" onclick="onToggleNav()">
-                <i class="bi bi-list" id="menuIcon"></i>
-            </div>
-        </nav>
-</header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: white; color: black;">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" id="logo" href="/">
+            <img class="logo horizontal-logo" src="/img/logo_lp.png" alt="logo">
+        </a>
+      </div>
+      <ul class="nav navbar-nav" id="color-title">
+        <li class="nav-item active">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/articles">Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contact">Contact us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about-us">About us</a>
+          </li class="nav-item">
+          <li class="nav-item">
+            <a class="nav-link" href="/helping-form">Incident</a>
+          </li class="nav-item">
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a class="nav-link" href="/register"><span class="glyphicon glyphicon-user"></span>Register</a></li>
+        <li>
+        <% if (!logged) {%>
+          <a href="/login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+        <% } else { %>
+          <a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </nav>

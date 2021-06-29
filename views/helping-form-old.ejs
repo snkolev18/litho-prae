@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device=width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/styles/helping-form.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+	<title>Helping</title>
+</head>
+<body>
+	<%- include ("partials/header.ejs", {logged: logged}) %>
+
+	<div class="form-container">
+		<form class="contact-form" action="/help" method="POST">
+			<h1>Incident</h1>
+			<h3 for="typeOfAnimal">What species is the endangered animal:</h3><br>
+			<input id="typeOfAnimal" name="typeOfAnimal" type="text" placeholder="Type">
+			<h3 for="type">What is the problem with the animal:</h3><br>
+			<input id="type" name="type" type="text" placeholder="Problem">
+			<br>
+			<h3>Address:</h3><br>
+			<input id="settlePoint" name="settlePoint" type="text" placeholder="Populated place">
+
+			<input id="addressQuarterText" name="addressQuarterText" type="text" placeholder="Neighborhood">
+
+			<input id="addressStreetText" name="addressStreetText" type="text" placeholder="Street">
+
+			<input id="addressStreetNumberText" name="addressStreetNumberText" type="text" placeholder="Street Number">
+
+			<textarea id="addressCommentsText" name="addressCommentsText" maxlength="1024" placeholder="Location description"></textarea>
+
+			<br>
+
+			<h3>Who:</h3><br>
+			<input type="text" id="name" name="name" placeholder="Full name *"><br>
+			<input type="email" id="email" name="email" placeholder="E-mail *"><br>
+			<input type="text" id="phone" placeholder="Phone *"><br>
+
+			<input type="submit" class="submit" value="Send">
+		</form>
+
+	</div>
+</body>
+</html>

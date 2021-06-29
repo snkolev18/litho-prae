@@ -67,3 +67,7 @@ body {
     text-decoration: none;
     color: #fff;
 }
+
+.navbar-inverse .navbar-nav>li>a {
+    color: black !important;
+}

@@ -65,7 +65,8 @@ router.post("/view/comment", Middlewares.isAuthenticated, limiter.configureLimit
 		return;
 	}
 
-	const result = await articles.commentOnArticle(comment.comment, comment.articleId, req.session.token.id);
+	console.log(comment);
+	const result = await articles.commentOnArticle(comment.message, comment.articleId, req.session.token.id);
 	console.log(result);
 	res.redirect(`/articles/view/${comment.articleId}`);
 	// delete req.session.token.commenttingOnId;
@@ -73,7 +74,7 @@ router.post("/view/comment", Middlewares.isAuthenticated, limiter.configureLimit
 
 router.get("/new", Middlewares.isAuthenticated, async function(req, res) {
 	const tags = await articles.getAllTags();
-	res.render("test_createArticle.ejs", {
+	res.render("create-article.ejs", {
 		tags: tags
 	});
 });
@@ -82,6 +83,7 @@ router.post("/new", Middlewares.isAuthenticated, limiter.configureLimiter(10, 5)
 	const article = req.body;
 	console.log(`Receiving new article: ${article.title}, ${article.content}`);
 	await articles.create(article, req.session.token.id);
+	res.redirect("/new");
 });
 
 router.get("/edit/:id", Middlewares.isAuthenticated, async function(req, res) {

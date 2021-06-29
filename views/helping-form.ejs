@@ -10,32 +10,13 @@
     <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/helping-form.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E
+    <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-
-    <script src="js/app.js" defer></script>
 </head>
 
 <body>
-    <header>
-        <nav class="main-nav">
-            <div>
-                <a class="brand" href="/">Home</a>
-            </div>
-
-            <ul class="main-nav-ul" id="mainNavUl">
-                <li><a href="/articles">Articles</a></li>
-                <li><a href="/contact">Contact us</a></li>
-                <li><a href="/aboutus">About us</a></li>
-                <li><a href="/register">Register</a></li>
-            </ul>
-
-            <div class="menu-toggle-btn" onclick="onToggleNav()">
-                <i class="bi bi-list" id="menuIcon"></i>
-            </div>
-        </nav>
-    </header>
+    <%- include ("partials/header.ejs", {logged: logged}) %>
 
     <div class="content">
         <div class="map">

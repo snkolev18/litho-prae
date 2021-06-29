@@ -1,0 +1,88 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+
+  /* CUSTOMIZE THE CAROUSEL
+  -------------------------------------------------- */
+
+  /* Carousel base class */
+  /*
+  .carousel {
+    /*margin-bottom: 4rem;
+  }*/
+  /* Since positioning the image, we need to help out the caption */
+  .carousel-caption {
+    bottom: auto;
+    padding: 1rem 0;
+    z-index: 10;
+  }
+  .carousel-caption h1,
+  .carousel-caption p {
+    text-shadow: 0px 0px 6px black;
+  }
+  .carousel-caption > * {
+      margin-bottom: 1.5rem;
+  }
+
+  .carousel-caption > :last-child {
+    margin-bottom: 0;
+  }
+  .carousel-caption > .btn:last-child {
+    margin-top: 1rem;
+  }
+
+  /* Declare heights because of positioning of img element */
+  .carousel-item {
+    height: 32rem;
+    /* transition: 50s ease-in-out left; */
+  }
+  .carousel-item {
+    align-items: center;
+  }
+  .carousel-item-next,
+  .carousel-item-prev,
+  .carousel-item.active {
+    display: flex;
+  }
+  .carousel-item > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 32rem;
+  }
+
+/* carousel */
+.carousel-item {
+    background-size: cover;
+    background-position: center center;
+    background-color: #777;
+}
+
+.carousel-item1 {
+    background-image: url(/img/blue.jpg);
+}
+.carousel-item2 {
+    background-image: url(/img/sea.jpg);
+}
+.carousel-item3 {
+    background-image: url(/img/about-us-images/Stoqn.jpg);
+}
+
+.btn-outline {
+    border-width: 3px;
+    font-weight: 600;
+    border-radius: .5rem;
+    min-width: 10rem;
+}
+.btn-outline svg {
+    transition: fill .15s ease-in-out;
+}
+.btn-outline:hover svg {
+    fill: #212529;
+}
+
+.arrow-down {
+    transform: rotate(-90deg);
+}

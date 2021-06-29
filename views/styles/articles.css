@@ -63,7 +63,6 @@ body {
 }
 
 .blog-title {
-    line-height: 1.5rem;
     margin: 1.5rem 0 0.5rem;
     text-align: center;
     font-size: 25px;
@@ -100,4 +99,14 @@ body {
 
 .new-article {
     width: 150px;
+}
+
+#post-btn-div {
+    display: flex;
+    flex-basis: 100%;
+    justify-content: center ;
+}
+
+.container-fluid {
+    background: white !important;
 }
