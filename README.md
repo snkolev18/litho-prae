@@ -1,4 +1,4 @@
-# Team Litho-Prae 
+<h1 align="center"> Team Litho-Prae </h1> 
 <p align="center"><img src="https://cdn.discordapp.com/attachments/850393971335495712/851139226129137674/Screenshot_2021-06-06_193906-removebg-preview_1.png" align="center" width="450"></p>
 <h2 align = "center">AQUA Project - 2021</h2>
 <br>
