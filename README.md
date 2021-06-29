@@ -13,14 +13,15 @@
 	<hr>
 	<h1><a href="https://codingburgas-my.sharepoint.com/:w:/g/personal/smtashev20_codingburgas_bg/ETYtlmBn4ZNMmusJjvHaeWMBlKjoXchQiH5BMKS4mA8REw?e=FgPW9b">📄 Documentation</a></h1>
 <hr>
-<h2>	This is priview of our website</h2>
+<h2>This is preview of our website</h2>
+
 <h1 align = "center">Our team</h1>
 <br>
 <table align="center">
       <tr align="center">
         <td>Name:</td>
         <td>Stoqn Kolev</td>
-        <td>Emo Ribarev</td>
+        <td>Emil Ribarev</td>
         <td>Stas Uzunov</td>
         <td>Stanislav Tashev</td>
         <td>Teodora Kompanska</td>
