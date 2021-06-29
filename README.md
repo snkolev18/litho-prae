@@ -13,8 +13,6 @@
 	<hr>
 	<h1><a href="https://codingburgas-my.sharepoint.com/:w:/g/personal/smtashev20_codingburgas_bg/ETYtlmBn4ZNMmusJjvHaeWMBlKjoXchQiH5BMKS4mA8REw?e=FgPW9b">📄 Documentation</a></h1>
 <hr>
-<h2>This is preview of our website</h2>
-
 <h1 align = "center">Our team</h1>
 <br>
 <table align="center">
