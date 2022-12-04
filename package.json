@@ -23,14 +23,14 @@
     "snyk": "^1.646.0"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.19.2",
     "bunyan": "^1.8.15",
     "bunyan-seq": "^0.7.0",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-rate-limit": "^5.2.6",
     "express-session": "^1.17.2",
     "fastify-helmet": "^5.3.1",
